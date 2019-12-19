@@ -1,0 +1,259 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node",
+"class": "ActionBuffer",
+"language": "GDScript",
+"path": "res://Utils/Action Buffer/action_buffer.gd"
+}, {
+"base": "ActionBufferStateComponent",
+"class": "ActionBufferActivateStateComponent",
+"language": "GDScript",
+"path": "res://Utils/Entity/State Components/Action Buffer/action_buffer_activate_state_component.gd"
+}, {
+"base": "ActionBufferStateComponent",
+"class": "ActionBufferDeactivateStateComponent",
+"language": "GDScript",
+"path": "res://Utils/Entity/State Components/Action Buffer/action_buffer_deactivate_state_component.gd"
+}, {
+"base": "EntityStateComponent",
+"class": "ActionBufferStateComponent",
+"language": "GDScript",
+"path": "res://Utils/Entity/State Components/Action Buffer/action_buffer_state_component.gd"
+}, {
+"base": "Node",
+"class": "ActionMap",
+"language": "GDScript",
+"path": "res://Utils/Input Handler/Action Map/action_map.gd"
+}, {
+"base": "CallFunctionStateComponent",
+"class": "CallFunctionEnterStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd"
+}, {
+"base": "CallFunctionStateComponent",
+"class": "CallFunctionExitStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/Exit/call_function_exit_state_component.gd"
+}, {
+"base": "NodeStateComponent",
+"class": "CallFunctionStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/call_function_state_component.gd"
+}, {
+"base": "CallFunctionStateComponent",
+"class": "CallFunctionUpdateStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/Update/call_function_update_state_component.gd"
+}, {
+"base": "Reference",
+"class": "Collision2D",
+"language": "GDScript",
+"path": "res://Utils/Collision 2D/collision_2d.gd"
+}, {
+"base": "State",
+"class": "ComponentState",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/component_state.gd"
+}, {
+"base": "Polygon2D",
+"class": "CompositePolygon2D",
+"language": "GDScript",
+"path": "res://Utils/Composite Polygon 2D/composite_polygon_2d.gd"
+}, {
+"base": "StateComponent",
+"class": "EntityStateComponent",
+"language": "GDScript",
+"path": "res://Utils/Entity/State Components/entity_state_component.gd"
+}, {
+"base": "NodeStateComponent",
+"class": "EqualsTransitionStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition_state_component.gd"
+}, {
+"base": "Reference",
+"class": "Geometry2D",
+"language": "GDScript",
+"path": "res://Utils/Geometry 2D/geometry_2d.gd"
+}, {
+"base": "NodeStateComponent",
+"class": "GreaterThanTransitionStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/greater_than_transition_state_component.gd"
+}, {
+"base": "Node",
+"class": "GroupingNode",
+"language": "GDScript",
+"path": "res://Utils/Grouping Node/grouping_node.gd"
+}, {
+"base": "Node",
+"class": "Health",
+"language": "GDScript",
+"path": "res://Utils/Entity/Health/health.gd"
+}, {
+"base": "Node",
+"class": "InputHandler",
+"language": "GDScript",
+"path": "res://Utils/Input Handler/input_handler.gd"
+}, {
+"base": "PhysicsBody2P5D",
+"class": "KinematicBody2P5D",
+"language": "GDScript",
+"path": "res://Utils/Physics Bodies/kinematic_body_2p5d.gd"
+}, {
+"base": "NodeStateComponent",
+"class": "LessThanTransitionStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/less_than_transition_state_component.gd"
+}, {
+"base": "Node",
+"class": "LookDirection",
+"language": "GDScript",
+"path": "res://Utils/Entity/Look Direction/look_direction.gd"
+}, {
+"base": "EntityStateComponent",
+"class": "LookDirectionStateComponent",
+"language": "GDScript",
+"path": "res://Utils/Entity/State Components/Look Direction/look_direction_state_component.gd"
+}, {
+"base": "EntityStateComponent",
+"class": "MoveStateComponent",
+"language": "GDScript",
+"path": "res://Utils/Entity/State Components/Movement/move_state_component.gd"
+}, {
+"base": "StateComponent",
+"class": "NodeStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/node_state_component.gd"
+}, {
+"base": "NodeStateComponent",
+"class": "NotEqualsTransitionStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/not_equals_transition_state_component.gd"
+}, {
+"base": "Area2D",
+"class": "PhysicsBody2P5D",
+"language": "GDScript",
+"path": "res://Utils/Physics Bodies/physics_body_2p5d.gd"
+}, {
+"base": "InputHandler",
+"class": "PlayerInputHandler",
+"language": "GDScript",
+"path": "res://Utils/Input Handler/player_input_handler.gd"
+}, {
+"base": "StateComponent",
+"class": "PressedTransitionStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd"
+}, {
+"base": "StateComponent",
+"class": "ReleasedTransitionStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Transitions/released_transition_state_component.gd"
+}, {
+"base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/state.gd"
+}, {
+"base": "Node",
+"class": "StateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/state_component.gd"
+}, {
+"base": "Node",
+"class": "StateMachine",
+"language": "GDScript",
+"path": "res://Utils/State Machine/state_machine.gd"
+}, {
+"base": "PhysicsBody2P5D",
+"class": "StaticBody2P5D",
+"language": "GDScript",
+"path": "res://Utils/Physics Bodies/static_body_2p5d.gd"
+}, {
+"base": "StaticBody2P5D",
+"class": "StaticSlope2P5D",
+"language": "GDScript",
+"path": "res://Utils/Physics Bodies/static_slope_2p5d.gd"
+}, {
+"base": "StaticBody2P5D",
+"class": "StaticWall2P5D",
+"language": "GDScript",
+"path": "res://Utils/Physics Bodies/static_wall_2p5d.gd"
+}, {
+"base": "StateComponent",
+"class": "TransitionStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Transitions/transition_state_component.gd"
+} ]
+_global_script_class_icons={
+"ActionBuffer": "res://Utils/Action Buffer/action_buffer.png",
+"ActionBufferActivateStateComponent": "res://Utils/Entity/State Components/Action Buffer/action_buffer_activate.png",
+"ActionBufferDeactivateStateComponent": "res://Utils/Entity/State Components/Action Buffer/action_buffer_deactivate.png",
+"ActionBufferStateComponent": "res://Utils/Entity/State Components/Action Buffer/action_buffer.png",
+"ActionMap": "res://Utils/Input Handler/Action Map/action_map.png",
+"CallFunctionEnterStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Enter/fun_enter.png",
+"CallFunctionExitStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Exit/fun_exit.png",
+"CallFunctionStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/fun.png",
+"CallFunctionUpdateStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Update/fun_update.png",
+"Collision2D": "",
+"ComponentState": "res://Utils/State Machine/State/state.png",
+"CompositePolygon2D": "",
+"EntityStateComponent": "res://Utils/Entity/State Components/entity_state_component.png",
+"EqualsTransitionStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition.png",
+"Geometry2D": "",
+"GreaterThanTransitionStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/greater_than_transition.png",
+"GroupingNode": "res://Utils/Grouping Node/folder.png",
+"Health": "res://Utils/Entity/Health/health.png",
+"InputHandler": "",
+"KinematicBody2P5D": "res://Utils/Physics Bodies/kinematic_body_2p5d.png",
+"LessThanTransitionStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/less_than_transition.png",
+"LookDirection": "res://Utils/Entity/Look Direction/look_direction.png",
+"LookDirectionStateComponent": "res://Utils/Entity/State Components/Look Direction/look_direction.png",
+"MoveStateComponent": "res://Utils/Entity/State Components/Movement/move_state_component.png",
+"NodeStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/node_state_component.png",
+"NotEqualsTransitionStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/not_equals_transition.png",
+"PhysicsBody2P5D": "",
+"PlayerInputHandler": "res://Utils/Input Handler/input.png",
+"PressedTransitionStateComponent": "res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.png",
+"ReleasedTransitionStateComponent": "res://Utils/State Machine/State/State Components/Transitions/released_transition_state_component.png",
+"State": "res://Utils/State Machine/State/state.png",
+"StateComponent": "res://Utils/State Machine/State/State Components/state_component.png",
+"StateMachine": "res://Utils/State Machine/state_machine.png",
+"StaticBody2P5D": "",
+"StaticSlope2P5D": "res://Utils/Physics Bodies/static_slope_2p5d.png",
+"StaticWall2P5D": "res://Utils/Physics Bodies/static_wall_2p5d.png",
+"TransitionStateComponent": ""
+}
+
+[application]
+
+config/name="Archer"
+config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "gut" )
+
+[input]
+
+test={
+"deadzone": 0.5,
+"events": [  ]
+}
+jump={
+"deadzone": 0.5,
+"events": [  ]
+}
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

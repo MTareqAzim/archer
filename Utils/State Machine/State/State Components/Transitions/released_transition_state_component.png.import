@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/released_transition_state_component.png-f91ab9e08e3057b5999c8c2aab5ac9bd.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Utils/State Machine/State/State Components/Transitions/released_transition_state_component.png"
+dest_files=[ "res://.import/released_transition_state_component.png-f91ab9e08e3057b5999c8c2aab5ac9bd.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

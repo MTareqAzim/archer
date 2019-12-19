@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Utils/Physics Bodies/static_wall_2p5d.gd" type="Script" id=1]
+[ext_resource path="res://Utils/Composite Polygon 2D/composite_polygon_2d.gd" type="Script" id=2]
+
+[node name="StaticWall2P5D" type="Area2D"]
+monitoring = false
+collision_layer = 2
+collision_mask = 0
+script = ExtResource( 1 )
+
+[node name="DistToGround" type="RayCast2D" parent="."]
+visible = false
+cast_to = Vector2( 0, 0 )
+collision_mask = 0
+collide_with_bodies = false
+
+[node name="TopShape" type="Polygon2D" parent="."]
+color = Color( 0, 0.2, 0.988235, 1 )
+polygon = PoolVector2Array( -10, -10, 10, -10, 10, 10, -10, 10 )
+
+[node name="VolumeShape" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -10, -10, 10, -10, 10, 10, -10, 10 )
+
+[node name="BaseShape" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( -10, -10, 10, -10, 10, 10, -10, 10 )
+polygons = [ PoolVector2Array( -10, -10, 10, -10, 10, 10, -10, 10 ) ]
+script = ExtResource( 2 )
+[connection signal="polygon_changed" from="BaseShape" to="." method="_on_CompositePolygon2D_polygon_changed"]
