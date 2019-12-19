@@ -18,7 +18,7 @@ func assign_dependencies() -> void:
 
 
 func _update_look_direction(direction: Vector2) -> void:
-	if _look_direction.get_look_direction() == direction:
+	if _look_direction.get_look_direction() == direction.x:
 		return
 	
-	_look_direction.set_look_direction(direction)
+	_look_direction.set_look_direction(direction.x)

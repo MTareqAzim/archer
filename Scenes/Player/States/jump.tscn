@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
+[ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=2]
+[ext_resource path="res://Utils/Entity/State Components/Look Direction/look_direction_state_component.gd" type="Script" id=3]
+[ext_resource path="res://Utils/Entity/State Components/Movement/jump_component.gd" type="Script" id=4]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=5]
+[ext_resource path="res://Utils/Grouping Node/grouping_node.gd" type="Script" id=6]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/greater_than_transition_state_component.gd" type="Script" id=7]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition_state_component.gd" type="Script" id=8]
+
+[node name="Jump" type="Node"]
+script = ExtResource( 1 )
+state_name = "jump"
+dependencies = {
+"body": NodePath(""),
+"input": NodePath(""),
+"look": NodePath("")
+}
+
+[node name="Move" type="Node" parent="."]
+script = ExtResource( 2 )
+body_key = "body"
+input_handler_key = "input"
+max_speed = 300
+
+[node name="Look Direction" type="Node" parent="."]
+script = ExtResource( 3 )
+look_direction_key = "look"
+input_handler_key = "input"
+
+[node name="Jump" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="Enter Gravity" type="Node" parent="Jump"]
+script = ExtResource( 5 )
+node_key = "body"
+FUNCTION_NAME = "set_gravity"
+
+[node name="Enter Y Velocity" type="Node" parent="Jump"]
+script = ExtResource( 5 )
+node_key = "body"
+FUNCTION_NAME = "set_velocity_y"
+args = [ 0 ]
+
+[node name="Transitions" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="Fall" type="Node" parent="Transitions"]
+script = ExtResource( 7 )
+node_key = "body"
+FUNCTION_NAME = "get_velocity_y"
+greater_than = [ 0 ]
+NEXT_STATE = "fall"
+
+[node name="Fall 2" type="Node" parent="Transitions"]
+script = ExtResource( 8 )
+node_key = "body"
+FUNCTION_NAME = "get_velocity_y"
+equals = [ 0 ]
+NEXT_STATE = "fall"

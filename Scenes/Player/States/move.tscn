@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
+[ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=2]
+[ext_resource path="res://Utils/Entity/State Components/Look Direction/look_direction_state_component.gd" type="Script" id=3]
+[ext_resource path="res://Utils/Grouping Node/grouping_node.gd" type="Script" id=4]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition_state_component.gd" type="Script" id=5]
+[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=6]
+
+[node name="Move" type="Node"]
+script = ExtResource( 1 )
+state_name = "move"
+dependencies = {
+"body": NodePath(""),
+"input": NodePath(""),
+"look": NodePath("")
+}
+
+[node name="Move" type="Node" parent="."]
+script = ExtResource( 2 )
+body_key = "body"
+input_handler_key = "input"
+max_speed = 200
+
+[node name="Look Direction" type="Node" parent="."]
+script = ExtResource( 3 )
+look_direction_key = "look"
+input_handler_key = "input"
+
+[node name="Transitions" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="Idle" type="Node" parent="Transitions"]
+script = ExtResource( 5 )
+node_key = "body"
+FUNCTION_NAME = "get_velocity_x"
+equals = [ 0 ]
+NEXT_STATE = "idle"
+
+[node name="Jump" type="Node" parent="Transitions"]
+script = ExtResource( 6 )
+ACTION = "jump"
+NEXT_STATE = "jump"
