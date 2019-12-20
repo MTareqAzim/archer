@@ -45,7 +45,7 @@ func _get_shoot_direction() -> Vector2:
 	var direction := Vector2()
 	var look_dir : int = _look_direction.get_look_direction()
 	
-	var aim : int = int(_player_input.is_action_pressed("high")) - int(_player_input.is_action_pressed("low"))
+	var aim : int = int(_player_input.is_action_pressed("ui_up")) - int(_player_input.is_action_pressed("ui_down"))
 	
 	if aim == 1:
 		direction = Vector2(look_dir, HIGH).normalized()

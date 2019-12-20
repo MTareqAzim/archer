@@ -15,7 +15,7 @@ func _physics_process(delta: float) -> void:
 	
 	var collision = move_and_collide(velocity * delta)
 	if collision != null:
-		queue_free()
+		set_physics_process(false)
 
 func shoot(direction: Vector2) -> void:
 	velocity = throw_velocity * direction
