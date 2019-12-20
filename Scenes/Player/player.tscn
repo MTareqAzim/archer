@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scenes/Player/player.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Player/player_animations.tres" type="SpriteFrames" id=2]
@@ -7,20 +7,22 @@
 [ext_resource path="res://Utils/Input Handler/player_input_handler.gd" type="Script" id=5]
 [ext_resource path="res://Utils/Input Handler/Action Map/action_map.gd" type="Script" id=6]
 [ext_resource path="res://Utils/Action Buffer/action_buffer.gd" type="Script" id=7]
-[ext_resource path="res://Utils/State Machine/state_machine.gd" type="Script" id=8]
-[ext_resource path="res://Scenes/Player/States/Movement/idle.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/Player/States/Movement/move.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Scenes/Player/States/Movement/jump.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/Player/States/Movement/fall.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Scenes/Player/States/Attack/idle.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Scenes/Player/States/Attack/shoot.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Scratchpad/PixelFont.tres" type="DynamicFont" id=15]
-[ext_resource path="res://Scenes/Player/current_state.gd" type="Script" id=16]
+[ext_resource path="res://Scenes/Player/bow.gd" type="Script" id=8]
+[ext_resource path="res://Utils/State Machine/state_machine.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/Player/States/Movement/idle.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Player/States/Movement/move.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Player/States/Movement/jump.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/Player/States/Movement/fall.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/Player/States/Attack/idle.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/Player/States/Attack/shoot.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scratchpad/PixelFont.tres" type="DynamicFont" id=16]
+[ext_resource path="res://Scenes/Player/current_state.gd" type="Script" id=17]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 16 )
 
 [node name="Player" type="KinematicBody2D"]
+collision_mask = 2
 script = ExtResource( 1 )
 gravity = 980
 
@@ -31,7 +33,9 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -16 )
 frames = ExtResource( 2 )
-animation = "fall"
+animation = "idle"
+frame = 5
+playing = true
 script = ExtResource( 3 )
 state_machines = [ NodePath("../Movement"), NodePath("../Attack") ]
 
@@ -41,7 +45,7 @@ script = ExtResource( 4 )
 [node name="Input" type="Node" parent="."]
 editor/display_folded = true
 script = ExtResource( 5 )
-state_machine = NodePath("../Movement")
+state_machines = [ NodePath("../Movement"), NodePath("../Attack") ]
 action_buffer = NodePath("../Action Buffer")
 
 [node name="Jump" type="Node" parent="Input"]
@@ -49,28 +53,49 @@ script = ExtResource( 6 )
 action = "ui_up"
 mapped_action = "jump"
 
+[node name="Shoot" type="Node" parent="Input"]
+script = ExtResource( 6 )
+action = "ui_b"
+mapped_action = "shoot"
+
+[node name="High" type="Node" parent="Input"]
+script = ExtResource( 6 )
+action = "ui_y"
+mapped_action = "high"
+
+[node name="Low" type="Node" parent="Input"]
+script = ExtResource( 6 )
+action = "ui_a"
+mapped_action = "low"
+
 [node name="Action Buffer" type="Node" parent="."]
 script = ExtResource( 7 )
 
+[node name="Bow" type="Position2D" parent="."]
+position = Vector2( 0, -16 )
+script = ExtResource( 8 )
+look_direction = NodePath("../Look Direction")
+player_input = NodePath("../Input")
+
 [node name="Movement" type="Node" parent="."]
 editor/display_folded = true
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 
-[node name="Idle" parent="Movement" instance=ExtResource( 9 )]
+[node name="Idle" parent="Movement" instance=ExtResource( 10 )]
 dependencies = {
 "body": NodePath("../.."),
 "input": NodePath("../../Input"),
 "look": NodePath("../../Look Direction")
 }
 
-[node name="Move" parent="Movement" instance=ExtResource( 10 )]
+[node name="Move" parent="Movement" instance=ExtResource( 11 )]
 dependencies = {
 "body": NodePath("../.."),
 "input": NodePath("../../Input"),
 "look": NodePath("../../Look Direction")
 }
 
-[node name="Jump" parent="Movement" instance=ExtResource( 11 )]
+[node name="Jump" parent="Movement" instance=ExtResource( 12 )]
 push_down = true
 overwrite = true
 dependencies = {
@@ -79,7 +104,7 @@ dependencies = {
 "look": NodePath("../../Look Direction")
 }
 
-[node name="Fall" parent="Movement" instance=ExtResource( 12 )]
+[node name="Fall" parent="Movement" instance=ExtResource( 13 )]
 dependencies = {
 "body": NodePath("../.."),
 "input": NodePath("../../Input"),
@@ -87,14 +112,15 @@ dependencies = {
 }
 
 [node name="Attack" type="Node" parent="."]
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 
-[node name="Idle" parent="Attack" instance=ExtResource( 13 )]
+[node name="Idle" parent="Attack" instance=ExtResource( 14 )]
 
-[node name="Shoot" parent="Attack" instance=ExtResource( 14 )]
+[node name="Shoot" parent="Attack" instance=ExtResource( 15 )]
 push_down = true
 overwrite = true
 dependencies = {
+"bow": NodePath("../../Bow"),
 "sprite": NodePath("../../AnimatedSprite")
 }
 
@@ -103,22 +129,34 @@ margin_left = -16.0
 margin_top = -50.0
 margin_right = 16.0
 margin_bottom = -36.0
-custom_fonts/font = ExtResource( 15 )
+custom_fonts/font = ExtResource( 16 )
 text = "State"
 align = 1
 valign = 1
-script = ExtResource( 16 )
+script = ExtResource( 17 )
 
 [node name="Attack State" type="Label" parent="."]
 margin_left = -16.0
 margin_top = -60.0
 margin_right = 16.0
 margin_bottom = -46.0
-custom_fonts/font = ExtResource( 15 )
+custom_fonts/font = ExtResource( 16 )
 text = "State"
 align = 1
 valign = 1
-script = ExtResource( 16 )
+script = ExtResource( 17 )
+
+[node name="Animation State" type="Label" parent="."]
+margin_left = -16.0
+margin_top = -70.0
+margin_right = 16.0
+margin_bottom = -56.0
+custom_fonts/font = ExtResource( 16 )
+text = "State"
+align = 1
+valign = 1
+script = ExtResource( 17 )
+[connection signal="animation_changed" from="AnimatedSprite" to="Animation State" method="_on_AnimatedSprite_animation_changed"]
 [connection signal="animation_finished" from="AnimatedSprite" to="AnimatedSprite" method="_on_AnimatedSprite_animation_finished"]
 [connection signal="direction_changed" from="Look Direction" to="AnimatedSprite" method="_on_Look_Direction_direction_changed"]
 [connection signal="state_changed" from="Movement" to="AnimatedSprite" method="_on_Movement_state_changed"]

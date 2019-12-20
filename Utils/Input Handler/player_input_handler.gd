@@ -1,16 +1,19 @@
 extends InputHandler
 class_name PlayerInputHandler, "input.png"
 
-onready var _state_machine : StateMachine = get_node(state_machine)
 onready var _action_buffer : ActionBuffer = get_node(action_buffer)
 
-export (NodePath) var state_machine
+export (Array, NodePath) var state_machines
 export (NodePath) var action_buffer
 
 var _map : Array = []
+var _state_machines : Array = []
 
 
 func _ready():
+	for node_path in state_machines:
+		_state_machines.append(get_node(node_path))
+	
 	repopulate_map()
 
 
@@ -25,7 +28,8 @@ func _unhandled_input(event):
 		var mapped_event = action_map.map(event)
 		if mapped_event:
 			_register_event(mapped_event)
-			_state_machine.handle_input(mapped_event)
+			for state_machine in _state_machines:
+				state_machine.handle_input(mapped_event)
 			get_tree().set_input_as_handled()
 
 

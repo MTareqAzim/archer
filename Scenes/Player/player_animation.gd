@@ -1,5 +1,7 @@
 extends AnimatedSprite
 
+signal animation_changed(anim)
+
 const RIGHT : int = 1
 const LEFT : int = -1
 
@@ -14,6 +16,11 @@ var _state_machines : Array = []
 func _ready() -> void:
 	for node_path in state_machines:
 		_state_machines.append(get_node(node_path))
+
+
+func play(anim: String = "default", backwards: bool = false) -> void:
+	emit_signal("animation_changed", anim)
+	.play(anim, backwards)
 
 
 func play_previous_state() -> void:
@@ -40,14 +47,14 @@ func _on_Look_Direction_direction_changed(new_direction: int) -> void:
 
 func _on_Movement_state_changed(current_state: State) -> void:
 	state_name = current_state.state_name
-	call_deferred("_play_proper_animation")
+	_play_proper_animation()
 
 
 func _on_Attack_state_changed(current_state):
 	if current_state.state_name != "idle":
 		state_name = current_state.state_name
 	
-	call_deferred("_play_proper_animation")
+	_play_proper_animation()
 
 
 func _on_AnimatedSprite_animation_finished():

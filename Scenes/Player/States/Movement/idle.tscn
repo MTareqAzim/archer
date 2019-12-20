@@ -20,7 +20,7 @@ dependencies = {
 script = ExtResource( 2 )
 body_key = "body"
 input_handler_key = "input"
-max_speed = 200
+max_speed = 150
 
 [node name="Look Direction" type="Node" parent="."]
 script = ExtResource( 3 )
