@@ -10,6 +10,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	velocity.y += gravity * delta
+	
+	$Collider.rotation = velocity.angle()
+	
 	var collision = move_and_collide(velocity * delta)
 	if collision != null:
 		queue_free()

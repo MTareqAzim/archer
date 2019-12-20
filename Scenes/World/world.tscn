@@ -8,10 +8,10 @@ extents = Vector2( 235.194, 10 )
 [node name="World" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 216, 133 )
+position = Vector2( 200, 180 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2( 192.043, 154.333 )
+position = Vector2( 210, 210 )
 collision_layer = 2
 collision_mask = 0
 __meta__ = {

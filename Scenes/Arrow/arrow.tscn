@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Arrow/arrow.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/arrow.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10, 2 )
+extents = Vector2( 7, 1.5 )
 
 [node name="Arrow" type="KinematicBody2D"]
 collision_layer = 0
@@ -12,5 +13,9 @@ script = ExtResource( 1 )
 throw_velocity = 400
 gravity = 400
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Collider"]
+position = Vector2( 0, -0.5 )
+texture = ExtResource( 2 )
