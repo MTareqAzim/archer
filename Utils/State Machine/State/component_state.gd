@@ -22,27 +22,23 @@ func is_class(type: String) -> bool:
 
 
 func enter() -> void:
-	for component in _components:
-		if component.active and component.has_method("enter"):
-			component.enter()
+	_call_component_function("enter")
 
 
 func exit() -> void:
-	for component in _components:
-		if component.active and component.has_method("exit"):
-			component.exit()
+	_call_component_function("exit")
 
 
 func handle_input(event: InputEvent) -> void:
-	for component in _components:
-		if component.active and component.has_method("handle_input"):
-			component.handle_input(event)
+	_call_component_function("handle_input", [event])
 
 
 func update(delta: float) -> void:
-	for component in _components:
-		if component.active and component.has_method("update"):
-			component.update(delta)
+	_call_component_function("update", [delta])
+
+
+func on_animation_finished(animation: String) -> void:
+	_call_component_function("on_animation_finished", [animation])
 
 
 func finished(next_state: String) -> void:
@@ -74,3 +70,9 @@ func _assign_dependencies() -> void:
 	for component in _components:
 		if component.has_method("assign_dependencies"):
 			component.assign_dependencies()
+
+
+func _call_component_function(function: String, args: Array = []) -> void:
+	for component in _components:
+		if component.active and component.has_method(function):
+			component.callv(function, args)

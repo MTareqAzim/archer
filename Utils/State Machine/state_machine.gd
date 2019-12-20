@@ -29,6 +29,10 @@ func _physics_process(delta: float) -> void:
 	current_state.update(delta)
 
 
+func on_animation_finished(animation: String) -> void:
+	current_state.on_animation_finished(animation)
+
+
 func get_class() -> String:
 	return "StateMachine"
 

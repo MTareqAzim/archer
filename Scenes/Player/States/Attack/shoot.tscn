@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
+[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/animation_finished_transition_state_component.gd" type="Script" id=2]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Exit/call_function_exit_state_component.gd" type="Script" id=3]
+
+[node name="Shoot" type="Node"]
+script = ExtResource( 1 )
+state_name = "shoot"
+dependencies = {
+"sprite": NodePath("")
+}
+
+[node name="Shoot Finished" type="Node" parent="."]
+script = ExtResource( 2 )
+animation = "shoot"
+NEXT_STATE = "previous"
+
+[node name="Prev Animation" type="Node" parent="."]
+script = ExtResource( 3 )
+node_key = "sprite"
+FUNCTION_NAME = "play_previous_state"
+has_args = false
