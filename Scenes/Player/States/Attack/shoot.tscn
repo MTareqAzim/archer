@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
-[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Exit/call_function_exit_state_component.gd" type="Script" id=2]
-[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=3]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=2]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Exit/call_function_exit_state_component.gd" type="Script" id=3]
 [ext_resource path="res://Utils/Grouping Node/grouping_node.gd" type="Script" id=4]
 [ext_resource path="res://Utils/State Machine/State/State Components/Transitions/animation_finished_transition_state_component.gd" type="Script" id=5]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/not_equals_transition_state_component.gd" type="Script" id=6]
@@ -15,19 +15,20 @@ dependencies = {
 "sprite": NodePath("")
 }
 
-[node name="Prev Animation" type="Node" parent="."]
-script = ExtResource( 2 )
-node_key = "sprite"
-FUNCTION_NAME = "play_previous_state"
-has_args = false
-
 [node name="Shoot" type="Node" parent="."]
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 node_key = "bow"
 FUNCTION_NAME = "shoot_arrow"
 has_args = false
 
+[node name="Prev Animation" type="Node" parent="."]
+script = ExtResource( 3 )
+node_key = "sprite"
+FUNCTION_NAME = "play_previous_state"
+has_args = false
+
 [node name="Transition" type="Node" parent="."]
+editor/display_folded = true
 script = ExtResource( 4 )
 
 [node name="Shoot Finished" type="Node" parent="Transition"]

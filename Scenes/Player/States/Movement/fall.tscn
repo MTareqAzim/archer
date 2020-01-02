@@ -17,12 +17,15 @@ dependencies = {
 "input": NodePath(""),
 "look": NodePath("")
 }
+variables = {
+"fall_gravity": 1200,
+"max_speed": 150
+}
 
 [node name="MoveStateComponent" type="Node" parent="."]
 script = ExtResource( 2 )
 body_key = "body"
 input_handler_key = "input"
-max_speed = 150
 
 [node name="LookDirectionStateComponent" type="Node" parent="."]
 script = ExtResource( 3 )
@@ -33,10 +36,9 @@ input_handler_key = "input"
 script = ExtResource( 4 )
 node_key = "body"
 FUNCTION_NAME = "set_gravity"
-args = [ 1200 ]
+args = [ "fall_gravity" ]
 
 [node name="Transitions" type="Node" parent="."]
-editor/display_folded = true
 script = ExtResource( 5 )
 
 [node name="On Ground" type="Node" parent="Transitions"]

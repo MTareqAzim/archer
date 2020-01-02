@@ -15,12 +15,14 @@ dependencies = {
 "input": NodePath(""),
 "look": NodePath("")
 }
+variables = {
+"max_speed": 150
+}
 
 [node name="Move" type="Node" parent="."]
 script = ExtResource( 2 )
 body_key = "body"
 input_handler_key = "input"
-max_speed = 150
 
 [node name="Look Direction" type="Node" parent="."]
 script = ExtResource( 3 )

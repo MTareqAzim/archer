@@ -17,12 +17,16 @@ dependencies = {
 "input": NodePath(""),
 "look": NodePath("")
 }
+variables = {
+"jump_duration": 0.5,
+"max_jump_height": 100,
+"max_speed": 150
+}
 
 [node name="Move" type="Node" parent="."]
 script = ExtResource( 2 )
 body_key = "body"
 input_handler_key = "input"
-max_speed = 150
 
 [node name="Look Direction" type="Node" parent="."]
 script = ExtResource( 3 )
@@ -41,7 +45,6 @@ FUNCTION_NAME = "set_gravity"
 script = ExtResource( 5 )
 node_key = "body"
 FUNCTION_NAME = "set_velocity_y"
-args = [ 0 ]
 
 [node name="Transitions" type="Node" parent="."]
 script = ExtResource( 6 )

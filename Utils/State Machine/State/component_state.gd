@@ -2,6 +2,7 @@ extends State
 class_name ComponentState, "state.png"
 
 export (Dictionary) var dependencies := {}
+export (Dictionary) var variables := {}
 
 var _components : Array = []
 var _dependencies : Dictionary = {}
@@ -11,6 +12,7 @@ func _ready() -> void:
 	_append_components(self)
 	_append_dependencies()
 	_assign_dependencies()
+	_assign_variables()
 
 
 func get_class() -> String:
@@ -49,6 +51,10 @@ func get_dependency(key: String) -> Node:
 	return _dependencies[key]
 
 
+func get_variable(key: String):
+	return variables[key]
+
+
 func _append_components(node: Node) -> void:
 	for child in node.get_children():
 		if child is StateComponent:
@@ -67,9 +73,11 @@ func _append_dependencies() -> void:
 
 
 func _assign_dependencies() -> void:
-	for component in _components:
-		if component.has_method("assign_dependencies"):
-			component.assign_dependencies()
+	_call_component_function("assign_dependencies")
+
+
+func _assign_variables() -> void:
+	_call_component_function("assign_variables")
 
 
 func _call_component_function(function: String, args: Array = []) -> void:
