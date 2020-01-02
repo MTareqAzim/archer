@@ -1,8 +1,6 @@
 extends InputHandler
 class_name PlayerInputHandler, "input.png"
 
-enum Aim {HIGH, MID, LOW}
-
 onready var _action_buffer : ActionBuffer = get_node(action_buffer)
 
 export (Array, NodePath) var state_machines
@@ -44,10 +42,6 @@ func get_direction() -> Vector2:
 
 func is_action_pressed(action: String) -> bool:
 	return Input.is_action_pressed(action)
-
-
-func get_aim() -> int:
-	return Aim.HIGH
 
 
 func repopulate_map() -> void:

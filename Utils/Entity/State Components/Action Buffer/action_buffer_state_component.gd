@@ -23,7 +23,6 @@ func _get_configuration_warning() -> String:
 
 
 func enter() -> void:
-	print("here")
 	_check_and_activate(true)
 
 

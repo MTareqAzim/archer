@@ -22,8 +22,9 @@ func _ready() -> void:
 
 func shoot_arrow() -> void:
 	_spawn_arrow()
+	var direction = _get_shoot_direction()
 	_position_arrow()
-	_shoot()
+	_shoot(direction)
 	_arrow = null
 
 
@@ -38,16 +39,14 @@ func _position_arrow():
 	_arrow.position.x += _look_direction.get_look_direction() * OFFSET
 
 
-func _shoot() -> void:
-	var direction : Vector2 = _get_shoot_direction()
+func _shoot(direction: Vector2) -> void:
 	_arrow.shoot(direction)
 
 
 func _get_shoot_direction() -> Vector2:
 	var direction := Vector2()
+	var aim : int = _look_direction.get_aim()
 	var look_dir : int = _look_direction.get_look_direction()
-	
-	var aim : int = _player_input.get_aim()
 	
 	if aim == Aim.HIGH:
 		direction = Vector2(look_dir, HIGH).normalized()
