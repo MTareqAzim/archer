@@ -1,5 +1,7 @@
 extends Position2D
 
+enum Aim {HIGH, MID, LOW}
+
 const arrow_packed_scene = preload("res://Scenes/Arrow/arrow.tscn")
 const OFFSET = 20
 const HIGH = -0.9
@@ -45,11 +47,11 @@ func _get_shoot_direction() -> Vector2:
 	var direction := Vector2()
 	var look_dir : int = _look_direction.get_look_direction()
 	
-	var aim : int = int(_player_input.is_action_pressed("ui_up")) - int(_player_input.is_action_pressed("ui_down"))
+	var aim : int = _player_input.get_aim()
 	
-	if aim == 1:
+	if aim == Aim.HIGH:
 		direction = Vector2(look_dir, HIGH).normalized()
-	elif aim == -1:
+	elif aim == Aim.LOW:
 		direction = Vector2(look_dir, LOW).normalized()
 	else:
 		direction = Vector2(look_dir, MID).normalized()

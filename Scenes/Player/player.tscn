@@ -34,7 +34,7 @@ shape = SubResource( 1 )
 position = Vector2( 0, -16 )
 frames = ExtResource( 2 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 script = ExtResource( 3 )
 state_machines = [ NodePath("../Movement"), NodePath("../Attack") ]
@@ -128,13 +128,20 @@ variables = {
 script = ExtResource( 9 )
 
 [node name="Idle" parent="Attack" instance=ExtResource( 14 )]
+dependencies = {
+"buffer": NodePath("../../Action Buffer")
+}
 
 [node name="Shoot" parent="Attack" instance=ExtResource( 15 )]
 push_down = true
 overwrite = true
 dependencies = {
 "bow": NodePath("../../Bow"),
+"buffer": NodePath("../../Action Buffer"),
 "sprite": NodePath("../../AnimatedSprite")
+}
+variables = {
+"shoot_pressed": "shoot_pressed"
 }
 
 [node name="Movement State" type="Label" parent="."]

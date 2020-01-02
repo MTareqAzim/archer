@@ -1,6 +1,8 @@
 extends InputHandler
 class_name PlayerInputHandler, "input.png"
 
+enum Aim {HIGH, MID, LOW}
+
 onready var _action_buffer : ActionBuffer = get_node(action_buffer)
 
 export (Array, NodePath) var state_machines
@@ -18,19 +20,8 @@ func _ready():
 
 
 func _unhandled_input(event):
-	if event.is_action("ui_right") \
-	or event.is_action("ui_left") \
-	or event.is_action("ui_up") \
-	or event.is_action("ui_down"):
-		get_tree().set_input_as_handled()
-	
-	for action_map in _map:
-		var mapped_event = action_map.map(event)
-		if mapped_event:
-			_register_event(mapped_event)
-			for state_machine in _state_machines:
-				state_machine.handle_input(mapped_event)
-			get_tree().set_input_as_handled()
+	_set_direction_events_as_handled(event)
+	_map_and_distribute_event(event)
 
 
 func add_child(node: Node, legible_unique_name: bool = false) -> void:
@@ -55,11 +46,15 @@ func is_action_pressed(action: String) -> bool:
 	return Input.is_action_pressed(action)
 
 
+func get_aim() -> int:
+	return Aim.HIGH
+
+
 func repopulate_map() -> void:
-	_map = _populate_map()
+	_map = _get_populated_map()
 
 
-func _populate_map() -> Array:
+func _get_populated_map() -> Array:
 	var map : Array = []
 	
 	for child in get_children():
@@ -67,6 +62,24 @@ func _populate_map() -> Array:
 			map.append(child)
 	
 	return map
+
+
+func _set_direction_events_as_handled(event: InputEvent) -> void:
+		if event.is_action("ui_right") \
+		or event.is_action("ui_left") \
+		or event.is_action("ui_up") \
+		or event.is_action("ui_down"):
+			get_tree().set_input_as_handled()
+
+
+func _map_and_distribute_event(event: InputEvent) -> void:
+	for action_map in _map:
+		var mapped_event = action_map.map(event)
+		if mapped_event:
+			_register_event(mapped_event)
+			for state_machine in _state_machines:
+				state_machine.handle_input(mapped_event)
+			get_tree().set_input_as_handled()
 
 
 func _register_event(event: InputEventAction) -> void:

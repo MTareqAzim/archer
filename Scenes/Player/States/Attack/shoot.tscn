@@ -12,7 +12,11 @@ script = ExtResource( 1 )
 state_name = "shoot"
 dependencies = {
 "bow": NodePath(""),
+"buffer": NodePath(""),
 "sprite": NodePath("")
+}
+variables = {
+"shoot_pressed": "shoot_pressed"
 }
 
 [node name="Shoot" type="Node" parent="."]
@@ -42,3 +46,12 @@ node_key = "sprite"
 FUNCTION_NAME = "get_animation"
 not_equals = [ "shoot" ]
 NEXT_STATE = "previous"
+
+[node name="Action Buffer" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="Shoot Pressed" type="Node" parent="Action Buffer"]
+script = ExtResource( 2 )
+node_key = "buffer"
+FUNCTION_NAME = "action_handled"
+args = [ "shoot_pressed" ]
