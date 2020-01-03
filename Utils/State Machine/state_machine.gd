@@ -57,6 +57,10 @@ func set_active(active: bool) -> void:
 		current_state = null
 
 
+func get_current_state() -> State:
+	return current_state
+
+
 func handle_input(event: InputEvent) -> void:
 	current_state.handle_input(event)
 

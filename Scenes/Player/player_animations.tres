@@ -92,4 +92,9 @@ animations = [ {
 "loop": false,
 "name": "crouch",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 39 ), ExtResource( 40 ), ExtResource( 41 ), ExtResource( 42 ) ],
+"loop": false,
+"name": "retreat",
+"speed": 12.0
 } ]

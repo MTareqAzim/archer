@@ -355,6 +355,10 @@ crouch={
 "deadzone": 0.5,
 "events": [  ]
 }
+retreat={
+"deadzone": 0.5,
+"events": [  ]
+}
 
 [rendering]
 

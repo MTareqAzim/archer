@@ -4,12 +4,13 @@ enum Aim {HIGH, MID, LOW}
 
 const arrow_packed_scene = preload("res://Scenes/Arrow/arrow.tscn")
 const OFFSET = 20
-const HIGH = -0.9
-const MID = -0.2
-const LOW = 0.4
 
 export (NodePath) var look_direction : NodePath
 export (NodePath) var player_input : NodePath
+
+export (float) var HIGH := -0.9
+export (float) var MID := -0.2
+export (float) var LOW := 0.5
 
 onready var _look_direction : LookDirection = get_node(look_direction)
 onready var _player_input : PlayerInputHandler = get_node(player_input)

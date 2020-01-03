@@ -57,3 +57,8 @@ has_args = true
 args = [ "crouch" ]
 equals = [ true ]
 NEXT_STATE = "crouch"
+
+[node name="Retreat" type="Node" parent="Transitions"]
+script = ExtResource( 6 )
+ACTION = "retreat"
+NEXT_STATE = "retreat"
