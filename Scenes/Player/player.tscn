@@ -44,6 +44,7 @@ bow = NodePath("../Bow")
 mid_angle = 20.0
 
 [node name="Input" type="Node" parent="."]
+editor/display_folded = true
 script = ExtResource( 5 )
 state_machines = [ NodePath("../Movement"), NodePath("../Attack") ]
 action_buffer = NodePath("../Action Buffer")
@@ -78,6 +79,7 @@ look_direction = NodePath("../Look Direction")
 player_input = NodePath("../Input")
 
 [node name="Movement" type="Node" parent="."]
+editor/display_folded = true
 script = ExtResource( 9 )
 
 [node name="Idle" parent="Movement" instance=ExtResource( 10 )]
@@ -126,6 +128,7 @@ variables = {
 }
 
 [node name="Attack" type="Node" parent="."]
+editor/display_folded = true
 script = ExtResource( 9 )
 
 [node name="Idle" parent="Attack" instance=ExtResource( 14 )]
@@ -144,6 +147,11 @@ dependencies = {
 variables = {
 "shoot_pressed": "shoot_pressed"
 }
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Movement State" type="Label" parent="."]
 margin_left = -16.0
