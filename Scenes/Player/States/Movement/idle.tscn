@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
 [ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Utils/Grouping Node/grouping_node.gd" type="Script" id=4]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/not_equals_transition_state_component.gd" type="Script" id=5]
 [ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=6]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition_state_component.gd" type="Script" id=7]
 
 [node name="Idle" type="Node"]
 script = ExtResource( 1 )
@@ -43,3 +44,17 @@ NEXT_STATE = "move"
 script = ExtResource( 6 )
 ACTION = "jump"
 NEXT_STATE = "jump"
+
+[node name="Crouch" type="Node" parent="Transitions"]
+script = ExtResource( 6 )
+ACTION = "crouch"
+NEXT_STATE = "crouch"
+
+[node name="Crouch" type="Node" parent="Transitions/Crouch"]
+script = ExtResource( 7 )
+node_key = "input"
+FUNCTION_NAME = "is_action_pressed"
+has_args = true
+args = [ "crouch" ]
+equals = [ true ]
+NEXT_STATE = "crouch"

@@ -43,3 +43,17 @@ NEXT_STATE = "idle"
 script = ExtResource( 6 )
 ACTION = "jump"
 NEXT_STATE = "jump"
+
+[node name="Crouch" type="Node" parent="Transitions"]
+script = ExtResource( 6 )
+ACTION = "crouch"
+NEXT_STATE = "crouch"
+
+[node name="Crouch" type="Node" parent="Transitions/Crouch"]
+script = ExtResource( 5 )
+node_key = "input"
+FUNCTION_NAME = "is_action_pressed"
+has_args = true
+args = [ "crouch" ]
+equals = [ true ]
+NEXT_STATE = "crouch"
