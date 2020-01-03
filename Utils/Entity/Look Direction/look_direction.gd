@@ -27,15 +27,25 @@ func get_look_direction() -> int:
 
 
 func get_aim() -> int:
-	var mouse_position = get_viewport().get_mouse_position()
-	var bow_position = _bow.get_global_position()
-	var aim_direction = (mouse_position - bow_position).normalized()
+	var aim_direction = _get_aim_direction()
 	
 	set_look_direction(sign(aim_direction.x))
 	
 	var aim_angle = rad2deg(aim_direction.angle())
-	print(aim_angle)
 	
+	var aim = _get_aim(aim_angle)
+	return aim
+
+
+func _get_aim_direction() -> Vector2:
+	var mouse_position = _bow.get_global_mouse_position()
+	var bow_position = _bow.get_global_position()
+	var aim_direction = (mouse_position - bow_position).normalized()
+	
+	return aim_direction
+
+
+func _get_aim(aim_angle: float) -> int:
 	if aim_angle < -mid_angle and aim_angle > mid_angle - 180.0:
 		return Aim.HIGH
 	elif aim_angle > mid_angle and aim_angle < 180.0 - mid_angle:

@@ -34,6 +34,7 @@ shape = SubResource( 1 )
 position = Vector2( 0, -16 )
 frames = ExtResource( 2 )
 animation = "idle"
+frame = 2
 playing = true
 script = ExtResource( 3 )
 state_machines = [ NodePath("../Movement"), NodePath("../Attack") ]
@@ -150,8 +151,8 @@ variables = {
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
 
 [node name="Movement State" type="Label" parent="."]
 margin_left = -16.0
