@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=2]
+[ext_resource path="res://Utils/Entity/State Components/Movement/dash_component.gd" type="Script" id=3]
+
+[node name="Back Roll" type="Node"]
+script = ExtResource( 1 )
+state_name = "back_roll"
+push_down = true
+dependencies = {
+"animation": NodePath(""),
+"body": NodePath(""),
+"look": NodePath("")
+}
+variables = {
+"crouch": "Crouch",
+"dash_distance": -50,
+"dash_duration": 0.25
+}
+
+[node name="Crouch" type="Node" parent="."]
+script = ExtResource( 2 )
+node_key = "animation"
+FUNCTION_NAME = "play"
+args = [ "crouch" ]
+
+[node name="Dash" type="Node" parent="."]
+script = ExtResource( 3 )
+look_direction_key = "look"
+next_state = "previous"
+
+[node name="Enter Velocity" type="Node" parent="Dash"]
+script = ExtResource( 2 )
+node_key = "body"
+FUNCTION_NAME = "set_velocity_x"
+
+[node name="Timer" type="Timer" parent="Dash"]

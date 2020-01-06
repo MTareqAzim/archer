@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
 [ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=4]
 [ext_resource path="res://Utils/Grouping Node/grouping_node.gd" type="Script" id=5]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition_state_component.gd" type="Script" id=6]
+[ext_resource path="res://Utils/Entity/State Components/Action Buffer/action_buffer_deactivate_state_component.gd" type="Script" id=7]
+[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=8]
 
 [node name="Fall" type="Node"]
 script = ExtResource( 1 )
@@ -14,6 +16,7 @@ push_down = true
 overwrite = true
 dependencies = {
 "body": NodePath(""),
+"buffer": NodePath(""),
 "input": NodePath(""),
 "look": NodePath("")
 }
@@ -47,3 +50,15 @@ node_key = "body"
 FUNCTION_NAME = "is_on_floor"
 equals = [ true ]
 NEXT_STATE = "previous"
+
+[node name="ActionBufferDeactivateStateComponent" type="Node" parent="Transitions"]
+script = ExtResource( 7 )
+action_buffer_key = "buffer"
+enter_only = true
+action = "dashed"
+frames = 5
+
+[node name="Back Dash" type="Node" parent="Transitions/ActionBufferDeactivateStateComponent"]
+script = ExtResource( 8 )
+ACTION = "retreat"
+NEXT_STATE = "back_dash"
