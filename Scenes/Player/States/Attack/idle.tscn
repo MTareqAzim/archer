@@ -1,32 +1,42 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
 [ext_resource path="res://Utils/Grouping Node/grouping_node.gd" type="Script" id=2]
-[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=3]
-[ext_resource path="res://Utils/Entity/State Components/Action Buffer/action_buffer_activate_state_component.gd" type="Script" id=4]
-[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/transition_state_component.gd" type="Script" id=5]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/function_activate_component_state_component.gd" type="Script" id=3]
+[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=4]
+[ext_resource path="res://Utils/Entity/State Components/Action Buffer/action_buffer_activate_state_component.gd" type="Script" id=5]
+[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/transition_state_component.gd" type="Script" id=6]
 
 [node name="Idle" type="Node"]
 script = ExtResource( 1 )
 state_name = "idle"
 dependencies = {
-"buffer": NodePath("")
+"buffer": NodePath(""),
+"movement": NodePath("")
 }
 
 [node name="Transitions" type="Node" parent="."]
 script = ExtResource( 2 )
 
-[node name="Shoot" type="Node" parent="Transitions"]
+[node name="Rolling" type="Node" parent="Transitions"]
 script = ExtResource( 3 )
+node_key = "movement"
+_activate = false
+FUNCTION_NAME = "get_current_state_name"
+has_args = false
+equals = [ "back_roll" ]
+
+[node name="Shoot" type="Node" parent="Transitions/Rolling"]
+script = ExtResource( 4 )
 ACTION = "shoot"
 NEXT_STATE = "shoot"
 
-[node name="Shoot 2" type="Node" parent="Transitions"]
-script = ExtResource( 4 )
+[node name="Shoot2" type="Node" parent="Transitions/Rolling"]
+script = ExtResource( 5 )
 action_buffer_key = "buffer"
 action = "shoot_pressed"
 frames = 10
 
-[node name="Shoot" type="Node" parent="Transitions/Shoot 2"]
-script = ExtResource( 5 )
+[node name="Shoot2" type="Node" parent="Transitions/Rolling/Shoot2"]
+script = ExtResource( 6 )
 NEXT_STATE = "shoot"

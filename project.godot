@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition_state_component.gd"
 }, {
+"base": "NodeStateComponent",
+"class": "FunctionActivateComponentStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/function_activate_component_state_component.gd"
+}, {
 "base": "Reference",
 "class": "Geometry2D",
 "language": "GDScript",
@@ -215,6 +220,7 @@ _global_script_class_icons={
 "CompositePolygon2D": "",
 "EntityStateComponent": "res://Utils/Entity/State Components/entity_state_component.png",
 "EqualsTransitionStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition.png",
+"FunctionActivateComponentStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/fun.png",
 "Geometry2D": "",
 "GreaterThanTransitionStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/greater_than_transition.png",
 "GroupingNode": "res://Utils/Grouping Node/folder.png",

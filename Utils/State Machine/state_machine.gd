@@ -61,6 +61,10 @@ func get_current_state() -> State:
 	return current_state
 
 
+func get_current_state_name() -> String:
+	return current_state.state_name
+
+
 func handle_input(event: InputEvent) -> void:
 	current_state.handle_input(event)
 

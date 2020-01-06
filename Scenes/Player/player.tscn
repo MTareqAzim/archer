@@ -250,7 +250,7 @@ dependencies = {
 variables = {
 "crouch": "Crouch",
 "dash_distance": -50,
-"dash_duration": 0.25,
+"dash_duration": 0.4,
 "stand_up": "Stand Up"
 }
 
@@ -273,7 +273,8 @@ script = ExtResource( 9 )
 
 [node name="Idle" parent="Attack" instance=ExtResource( 19 )]
 dependencies = {
-"buffer": NodePath("../../Action Buffer")
+"buffer": NodePath("../../Action Buffer"),
+"movement": NodePath("../../Movement")
 }
 
 [node name="Shoot" parent="Attack" instance=ExtResource( 20 )]
@@ -294,6 +295,7 @@ drag_margin_h_enabled = false
 drag_margin_v_enabled = false
 
 [node name="Movement State" type="Label" parent="."]
+visible = false
 margin_left = -16.0
 margin_top = -50.0
 margin_right = 16.0
@@ -305,6 +307,7 @@ valign = 1
 script = ExtResource( 22 )
 
 [node name="Attack State" type="Label" parent="."]
+visible = false
 margin_left = -16.0
 margin_top = -60.0
 margin_right = 16.0
@@ -316,6 +319,7 @@ valign = 1
 script = ExtResource( 22 )
 
 [node name="Animation State" type="Label" parent="."]
+visible = false
 margin_left = -16.0
 margin_top = -70.0
 margin_right = 16.0
