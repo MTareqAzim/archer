@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
 [ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Utils/Grouping Node/grouping_node.gd" type="Script" id=6]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/greater_than_transition_state_component.gd" type="Script" id=7]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition_state_component.gd" type="Script" id=8]
+[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=9]
 
 [node name="Jump" type="Node"]
 script = ExtResource( 1 )
@@ -62,3 +63,8 @@ node_key = "body"
 FUNCTION_NAME = "get_velocity_y"
 equals = [ 0 ]
 NEXT_STATE = "fall"
+
+[node name="Back Dash" type="Node" parent="Transitions"]
+script = ExtResource( 9 )
+ACTION = "retreat"
+NEXT_STATE = "back_dash"

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
+[ext_resource path="res://Utils/Entity/State Components/Movement/dash_component.gd" type="Script" id=2]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=3]
+
+[node name="Back Dash" type="Node"]
+script = ExtResource( 1 )
+state_name = "back_dash"
+push_down = true
+overwrite = true
+dependencies = {
+"body": NodePath(""),
+"look": NodePath("")
+}
+variables = {
+"dash_distance": -50,
+"dash_duration": 0.25
+}
+
+[node name="Dash" type="Node" parent="."]
+script = ExtResource( 2 )
+look_direction_key = "look"
+next_state = "fall"
+
+[node name="Enter Velocity" type="Node" parent="Dash"]
+script = ExtResource( 3 )
+node_key = "body"
+FUNCTION_NAME = "set_velocity_x"
+
+[node name="Timer" type="Timer" parent="Dash"]

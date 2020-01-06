@@ -3,7 +3,7 @@ extends Position2D
 enum Aim {HIGH, MID, LOW}
 
 const arrow_packed_scene = preload("res://Scenes/Arrow/arrow.tscn")
-const OFFSET = 20
+const OFFSET = 10
 
 export (NodePath) var look_direction : NodePath
 export (NodePath) var player_input : NodePath
@@ -24,7 +24,7 @@ func _ready() -> void:
 func shoot_arrow() -> void:
 	_spawn_arrow()
 	var direction = _get_shoot_direction()
-	_position_arrow()
+	_position_arrow(direction)
 	_shoot(direction)
 	_arrow = null
 
@@ -35,9 +35,9 @@ func _spawn_arrow() -> void:
 		get_tree().current_scene.add_child(_arrow)
 
 
-func _position_arrow():
+func _position_arrow(direction: Vector2) -> void:
 	_arrow.global_transform = global_transform
-	_arrow.position.x += _look_direction.get_look_direction() * OFFSET
+	_arrow.position.x += sign(direction.x) * OFFSET
 
 
 func _shoot(direction: Vector2) -> void:

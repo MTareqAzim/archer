@@ -29,7 +29,7 @@ func set_velocity_x(new_velocity_x: float) -> void:
 
 
 func set_velocity_y(new_velocity_y: float) -> void:
-	velocity.y= new_velocity_y
+	velocity.y = new_velocity_y
 
 
 func get_velocity() -> Vector2:
@@ -44,12 +44,13 @@ func get_velocity_y() -> int:
 	return int(round(velocity.y))
 
 
+func is_grounded() -> bool:
+	return test_move(self.transform, Vector2(0,1))
+
+
 func _apply_gravity(velocity: Vector2, delta: float) -> Vector2:
-		if not is_on_floor():
+		if not is_grounded():
 			velocity.y += round(gravity * delta)
-		
-		if is_on_floor() and velocity.y > 0:
-			velocity.y = 0.0
 		
 		return velocity
 

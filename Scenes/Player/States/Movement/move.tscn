@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
 [ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=2]
 [ext_resource path="res://Utils/Entity/State Components/Look Direction/look_direction_state_component.gd" type="Script" id=3]
 [ext_resource path="res://Utils/Grouping Node/grouping_node.gd" type="Script" id=4]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition_state_component.gd" type="Script" id=5]
-[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=6]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/not_equals_transition_state_component.gd" type="Script" id=6]
+[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=7]
 
 [node name="Move" type="Node"]
 script = ExtResource( 1 )
@@ -39,13 +40,20 @@ FUNCTION_NAME = "get_velocity_x"
 equals = [ 0 ]
 NEXT_STATE = "idle"
 
-[node name="Jump" type="Node" parent="Transitions"]
+[node name="Fall" type="Node" parent="Transitions"]
 script = ExtResource( 6 )
+node_key = "body"
+FUNCTION_NAME = "is_grounded"
+not_equals = [ true ]
+NEXT_STATE = "fall"
+
+[node name="Jump" type="Node" parent="Transitions"]
+script = ExtResource( 7 )
 ACTION = "jump"
 NEXT_STATE = "jump"
 
 [node name="Crouch" type="Node" parent="Transitions"]
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 ACTION = "crouch"
 NEXT_STATE = "crouch"
 
@@ -59,6 +67,6 @@ equals = [ true ]
 NEXT_STATE = "crouch"
 
 [node name="Retreat" type="Node" parent="Transitions"]
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 ACTION = "retreat"
 NEXT_STATE = "retreat"

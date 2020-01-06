@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scenes/Player/player.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Player/player_animations.tres" type="SpriteFrames" id=2]
@@ -14,11 +14,13 @@
 [ext_resource path="res://Scenes/Player/States/Movement/jump.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/Player/States/Movement/fall.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/Player/States/Movement/crouch.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Scenes/Player/States/Movement/retreat.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Scenes/Player/States/Attack/idle.tscn" type="PackedScene" id=16]
-[ext_resource path="res://Scenes/Player/States/Attack/shoot.tscn" type="PackedScene" id=17]
-[ext_resource path="res://Scratchpad/PixelFont.tres" type="DynamicFont" id=18]
-[ext_resource path="res://Scenes/Player/current_state.gd" type="Script" id=19]
+[ext_resource path="res://Scenes/Player/States/Movement/crouch_move.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/Player/States/Movement/retreat.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/Player/States/Movement/back_dash.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Scenes/Player/States/Attack/idle.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scenes/Player/States/Attack/shoot.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Scratchpad/PixelFont.tres" type="DynamicFont" id=20]
+[ext_resource path="res://Scenes/Player/current_state.gd" type="Script" id=21]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 16 )
@@ -126,7 +128,7 @@ mapped_action = "crouch"
 
 [node name="Retreat" type="Node" parent="Input"]
 script = ExtResource( 6 )
-action = "ui_up"
+action = "right_mouse"
 mapped_action = "retreat"
 
 [node name="Action Buffer" type="Node" parent="."]
@@ -214,7 +216,30 @@ variables = {
 "stand_up": "Stand Up"
 }
 
-[node name="Retreat" parent="Movement" instance=ExtResource( 15 )]
+[node name="Crouch Move" parent="Movement" instance=ExtResource( 15 )]
+dependencies = {
+"animation": NodePath("../../AnimationPlayer"),
+"body": NodePath("../.."),
+"input": NodePath("../../Input"),
+"look": NodePath("../../Look Direction")
+}
+variables = {
+"crouch": "Crouch",
+"max_speed": 75,
+"stand_up": "Stand Up"
+}
+
+[node name="Retreat" parent="Movement" instance=ExtResource( 16 )]
+dependencies = {
+"body": NodePath("../.."),
+"look": NodePath("../../Look Direction")
+}
+variables = {
+"dash_distance": -50,
+"dash_duration": 0.25
+}
+
+[node name="Back Dash" parent="Movement" instance=ExtResource( 17 )]
 dependencies = {
 "body": NodePath("../.."),
 "look": NodePath("../../Look Direction")
@@ -227,12 +252,12 @@ variables = {
 [node name="Attack" type="Node" parent="."]
 script = ExtResource( 9 )
 
-[node name="Idle" parent="Attack" instance=ExtResource( 16 )]
+[node name="Idle" parent="Attack" instance=ExtResource( 18 )]
 dependencies = {
 "buffer": NodePath("../../Action Buffer")
 }
 
-[node name="Shoot" parent="Attack" instance=ExtResource( 17 )]
+[node name="Shoot" parent="Attack" instance=ExtResource( 19 )]
 push_down = true
 overwrite = true
 dependencies = {
@@ -254,33 +279,33 @@ margin_left = -16.0
 margin_top = -50.0
 margin_right = 16.0
 margin_bottom = -36.0
-custom_fonts/font = ExtResource( 18 )
+custom_fonts/font = ExtResource( 20 )
 text = "State"
 align = 1
 valign = 1
-script = ExtResource( 19 )
+script = ExtResource( 21 )
 
 [node name="Attack State" type="Label" parent="."]
 margin_left = -16.0
 margin_top = -60.0
 margin_right = 16.0
 margin_bottom = -46.0
-custom_fonts/font = ExtResource( 18 )
+custom_fonts/font = ExtResource( 20 )
 text = "State"
 align = 1
 valign = 1
-script = ExtResource( 19 )
+script = ExtResource( 21 )
 
 [node name="Animation State" type="Label" parent="."]
 margin_left = -16.0
 margin_top = -70.0
 margin_right = 16.0
 margin_bottom = -56.0
-custom_fonts/font = ExtResource( 18 )
+custom_fonts/font = ExtResource( 20 )
 text = "State"
 align = 1
 valign = 1
-script = ExtResource( 19 )
+script = ExtResource( 21 )
 [connection signal="animation_changed" from="AnimatedSprite" to="Animation State" method="_on_AnimatedSprite_animation_changed"]
 [connection signal="animation_finished" from="AnimatedSprite" to="AnimatedSprite" method="_on_AnimatedSprite_animation_finished"]
 [connection signal="direction_changed" from="Look Direction" to="AnimatedSprite" method="_on_Look_Direction_direction_changed"]
