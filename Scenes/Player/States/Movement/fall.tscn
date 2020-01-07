@@ -44,11 +44,11 @@ args = [ "fall_gravity" ]
 [node name="Transitions" type="Node" parent="."]
 script = ExtResource( 5 )
 
-[node name="On Ground" type="Node" parent="Transitions"]
+[node name="Not Falling" type="Node" parent="Transitions"]
 script = ExtResource( 6 )
 node_key = "body"
-FUNCTION_NAME = "is_on_floor"
-equals = [ true ]
+FUNCTION_NAME = "get_velocity_y"
+equals = [ 0 ]
 NEXT_STATE = "previous"
 
 [node name="ActionBufferDeactivateStateComponent" type="Node" parent="Transitions"]

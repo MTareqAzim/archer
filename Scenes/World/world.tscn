@@ -1,17 +1,25 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scenes/Player/player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Sprites/Terrain/grassy_stone.tres" type="TileSet" id=2]
+[ext_resource path="res://Sprites/Terrain/grassy_stone.tres" type="TileSet" id=1]
+[ext_resource path="res://Scenes/Player/player.tscn" type="PackedScene" id=2]
 
 [node name="World" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 200, 180 )
-
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 32, 32 )
 collision_layer = 2
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 393216, 0, 262144, 393217, 0, 262145, 393218, 0, 262145, 393219, 0, 262145, 393220, 0, 262145, 393221, 0, 262145, 393222, 0, 262145, 393223, 0, 262145, 393224, 0, 262145, 393225, 0, 262145, 393226, 0, 262145, 393227, 0, 262146 )
+tile_data = PoolIntArray( 393216, 0, 0, 393217, 0, 1, 393218, 0, 1, 393219, 0, 1, 393220, 0, 1, 393221, 0, 1, 393222, 0, 1, 393223, 0, 1, 393224, 0, 1, 393225, 0, 1, 393226, 0, 1, 393227, 0, 2, 458752, 0, 131072, 458753, 0, 131073, 458754, 0, 131073, 458755, 0, 131073, 458756, 0, 131073, 458757, 0, 131073, 458758, 0, 131073, 458759, 0, 131073, 458760, 0, 131073, 458761, 0, 131073, 458762, 0, 131073, 458763, 0, 131074 )
+
+[node name="Platforms" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 4
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 262148, 0, 262144, 262149, 0, 262145, 262150, 0, 262145, 262151, 0, 262145, 262152, 0, 262146 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 200.324, 192 )

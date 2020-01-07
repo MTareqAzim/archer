@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=2]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Exit/call_function_exit_state_component.gd" type="Script" id=3]
+[ext_resource path="res://Utils/Grouping Node/grouping_node.gd" type="Script" id=4]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition_state_component.gd" type="Script" id=5]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/greater_than_transition_state_component.gd" type="Script" id=6]
+
+[node name="Pass Through" type="Node"]
+script = ExtResource( 1 )
+state_name = "pass_through"
+push_down = true
+overwrite = true
+dependencies = {
+"body": NodePath(""),
+"buffer": NodePath("")
+}
+variables = {
+"crouched": "crouched",
+"mask_bit": 2,
+"mask_enter_value": false,
+"mask_exit_value": true
+}
+
+[node name="Unset Mask Bit" type="Node" parent="."]
+script = ExtResource( 2 )
+node_key = "body"
+FUNCTION_NAME = "set_collision_mask_bit"
+args = [ "mask_bit", "mask_enter_value" ]
+
+[node name="Set Mask Bit" type="Node" parent="."]
+script = ExtResource( 3 )
+node_key = "body"
+FUNCTION_NAME = "set_collision_mask_bit"
+args = [ "mask_bit", "mask_exit_value" ]
+
+[node name="Transitions" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="Grounded" type="Node" parent="Transitions"]
+script = ExtResource( 5 )
+node_key = "body"
+FUNCTION_NAME = "is_grounded"
+equals = [ true ]
+NEXT_STATE = "previous"
+
+[node name="Fall" type="Node" parent="Transitions"]
+script = ExtResource( 6 )
+node_key = "body"
+FUNCTION_NAME = "get_velocity_y"
+greater_than = [ 50 ]
+NEXT_STATE = "fall"
+
+[node name="Action Buffer" type="Node" parent="."]
+editor/display_folded = true
+script = ExtResource( 4 )
+
+[node name="Crouched Handled" type="Node" parent="Action Buffer"]
+script = ExtResource( 2 )
+node_key = "buffer"
+FUNCTION_NAME = "action_handled"
+args = [ "crouched" ]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Utils/State Machine/State/State Components/Transitions/released_transition_state_component.gd" type="Script" id=7]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/not_equals_transition_state_component.gd" type="Script" id=8]
 [ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=9]
+[ext_resource path="res://Utils/Entity/State Components/Action Buffer/action_buffer_activate_state_component.gd" type="Script" id=10]
+[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/transition_state_component.gd" type="Script" id=11]
 
 [node name="Crouch" type="Node"]
 script = ExtResource( 1 )
@@ -18,11 +20,13 @@ overwrite = true
 dependencies = {
 "animation": NodePath(""),
 "body": NodePath(""),
+"buffer": NodePath(""),
 "input": NodePath(""),
 "look": NodePath("")
 }
 variables = {
 "crouch": "Crouch",
+"crouched": "crouched",
 "max_speed": 75,
 "stand_up": "Stand Up"
 }
@@ -89,3 +93,23 @@ NEXT_STATE = "high_jump"
 script = ExtResource( 9 )
 ACTION = "retreat"
 NEXT_STATE = "back_roll"
+
+[node name="Crouched" type="Node" parent="Transitions"]
+script = ExtResource( 10 )
+action_buffer_key = "buffer"
+enter_only = true
+action = "crouched"
+frames = 7
+
+[node name="Pass Through" type="Node" parent="Transitions/Crouched"]
+script = ExtResource( 11 )
+NEXT_STATE = "pass_through"
+
+[node name="Action Buffer" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="Crouched" type="Node" parent="Action Buffer"]
+script = ExtResource( 5 )
+node_key = "buffer"
+FUNCTION_NAME = "add_action"
+args = [ "crouched" ]

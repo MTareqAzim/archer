@@ -19,11 +19,13 @@ overwrite = true
 dependencies = {
 "animation": NodePath(""),
 "body": NodePath(""),
+"buffer": NodePath(""),
 "input": NodePath(""),
 "look": NodePath("")
 }
 variables = {
 "crouch": "Crouch",
+"crouched": "crouched",
 "max_speed": 75,
 "stand_up": "Stand Up"
 }
@@ -51,6 +53,7 @@ FUNCTION_NAME = "play"
 args = [ "stand_up" ]
 
 [node name="Transitions" type="Node" parent="."]
+editor/display_folded = true
 script = ExtResource( 6 )
 
 [node name="Stand Up" type="Node" parent="Transitions"]

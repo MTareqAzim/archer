@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Scenes/Player/player.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Player/player_animations.tres" type="SpriteFrames" id=2]
@@ -11,17 +11,18 @@
 [ext_resource path="res://Utils/State Machine/state_machine.gd" type="Script" id=9]
 [ext_resource path="res://Scenes/Player/States/Movement/idle.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Player/States/Movement/move.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/Player/States/Movement/jump.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Scenes/Player/States/Movement/fall.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Scenes/Player/States/Movement/crouch.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Scenes/Player/States/Movement/crouch_move.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Scenes/Player/States/Movement/retreat.tscn" type="PackedScene" id=16]
-[ext_resource path="res://Scenes/Player/States/Movement/back_roll.tscn" type="PackedScene" id=17]
-[ext_resource path="res://Scenes/Player/States/Movement/back_dash.tscn" type="PackedScene" id=18]
-[ext_resource path="res://Scenes/Player/States/Attack/idle.tscn" type="PackedScene" id=19]
-[ext_resource path="res://Scenes/Player/States/Attack/shoot.tscn" type="PackedScene" id=20]
-[ext_resource path="res://Scratchpad/PixelFont.tres" type="DynamicFont" id=21]
-[ext_resource path="res://Scenes/Player/current_state.gd" type="Script" id=22]
+[ext_resource path="res://Scenes/Player/States/Movement/fall.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/Player/States/Movement/pass_through.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/Player/States/Movement/jump.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/Player/States/Movement/crouch.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/Player/States/Movement/crouch_move.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/Player/States/Movement/retreat.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Scenes/Player/States/Movement/back_roll.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scenes/Player/States/Movement/back_dash.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Scenes/Player/States/Attack/idle.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Scenes/Player/States/Attack/shoot.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Scratchpad/PixelFont.tres" type="DynamicFont" id=22]
+[ext_resource path="res://Scenes/Player/current_state.gd" type="Script" id=23]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 16 )
@@ -81,7 +82,7 @@ tracks/1/keys = {
 }
 
 [node name="Player" type="KinematicBody2D"]
-collision_mask = 2
+collision_mask = 6
 script = ExtResource( 1 )
 gravity = 980
 
@@ -97,7 +98,7 @@ anims/Crouch = SubResource( 2 )
 position = Vector2( 0, -16 )
 frames = ExtResource( 2 )
 animation = "idle"
-frame = 1
+frame = 2
 playing = true
 script = ExtResource( 3 )
 state_machines = [ NodePath("../Movement"), NodePath("../Attack") ]
@@ -164,7 +165,31 @@ variables = {
 "max_speed": 150
 }
 
-[node name="Jump" parent="Movement" instance=ExtResource( 12 )]
+[node name="Fall" parent="Movement" instance=ExtResource( 12 )]
+dependencies = {
+"body": NodePath("../.."),
+"buffer": NodePath("../../Action Buffer"),
+"input": NodePath("../../Input"),
+"look": NodePath("../../Look Direction")
+}
+variables = {
+"fall_gravity": 1200,
+"max_speed": 150
+}
+
+[node name="Pass Through" parent="Movement" instance=ExtResource( 13 )]
+dependencies = {
+"body": NodePath("../.."),
+"buffer": NodePath("../../Action Buffer")
+}
+variables = {
+"crouched": "crouched",
+"mask_bit": 2,
+"mask_enter_value": false,
+"mask_exit_value": true
+}
+
+[node name="Jump" parent="Movement" instance=ExtResource( 14 )]
 push_down = true
 overwrite = true
 dependencies = {
@@ -178,7 +203,7 @@ variables = {
 "max_speed": 150
 }
 
-[node name="High Jump" parent="Movement" instance=ExtResource( 12 )]
+[node name="High Jump" parent="Movement" instance=ExtResource( 14 )]
 state_name = "high_jump"
 push_down = true
 overwrite = true
@@ -193,45 +218,37 @@ variables = {
 "max_speed": 150
 }
 
-[node name="Fall" parent="Movement" instance=ExtResource( 13 )]
+[node name="Crouch" parent="Movement" instance=ExtResource( 15 )]
 dependencies = {
+"animation": NodePath("../../AnimationPlayer"),
 "body": NodePath("../.."),
 "buffer": NodePath("../../Action Buffer"),
 "input": NodePath("../../Input"),
 "look": NodePath("../../Look Direction")
 }
 variables = {
-"fall_gravity": 1200,
-"max_speed": 150
+"crouch": "Crouch",
+"crouched": "crouched",
+"max_speed": 75,
+"stand_up": "Stand Up"
 }
 
-[node name="Crouch" parent="Movement" instance=ExtResource( 14 )]
+[node name="Crouch Move" parent="Movement" instance=ExtResource( 16 )]
 dependencies = {
 "animation": NodePath("../../AnimationPlayer"),
 "body": NodePath("../.."),
+"buffer": NodePath("../../Action Buffer"),
 "input": NodePath("../../Input"),
 "look": NodePath("../../Look Direction")
 }
 variables = {
 "crouch": "Crouch",
+"crouched": "crouched",
 "max_speed": 75,
 "stand_up": "Stand Up"
 }
 
-[node name="Crouch Move" parent="Movement" instance=ExtResource( 15 )]
-dependencies = {
-"animation": NodePath("../../AnimationPlayer"),
-"body": NodePath("../.."),
-"input": NodePath("../../Input"),
-"look": NodePath("../../Look Direction")
-}
-variables = {
-"crouch": "Crouch",
-"max_speed": 75,
-"stand_up": "Stand Up"
-}
-
-[node name="Retreat" parent="Movement" instance=ExtResource( 16 )]
+[node name="Retreat" parent="Movement" instance=ExtResource( 17 )]
 dependencies = {
 "body": NodePath("../.."),
 "look": NodePath("../../Look Direction")
@@ -241,7 +258,7 @@ variables = {
 "dash_duration": 0.3
 }
 
-[node name="Back Roll" parent="Movement" instance=ExtResource( 17 )]
+[node name="Back Roll" parent="Movement" instance=ExtResource( 18 )]
 dependencies = {
 "animation": NodePath("../../AnimationPlayer"),
 "body": NodePath("../.."),
@@ -254,7 +271,7 @@ variables = {
 "stand_up": "Stand Up"
 }
 
-[node name="Back Dash" parent="Movement" instance=ExtResource( 18 )]
+[node name="Back Dash" parent="Movement" instance=ExtResource( 19 )]
 dependencies = {
 "body": NodePath("../.."),
 "buffer": NodePath("../../Action Buffer"),
@@ -271,13 +288,13 @@ variables = {
 [node name="Attack" type="Node" parent="."]
 script = ExtResource( 9 )
 
-[node name="Idle" parent="Attack" instance=ExtResource( 19 )]
+[node name="Idle" parent="Attack" instance=ExtResource( 20 )]
 dependencies = {
 "buffer": NodePath("../../Action Buffer"),
 "movement": NodePath("../../Movement")
 }
 
-[node name="Shoot" parent="Attack" instance=ExtResource( 20 )]
+[node name="Shoot" parent="Attack" instance=ExtResource( 21 )]
 push_down = true
 overwrite = true
 dependencies = {
@@ -295,16 +312,15 @@ drag_margin_h_enabled = false
 drag_margin_v_enabled = false
 
 [node name="Movement State" type="Label" parent="."]
-visible = false
 margin_left = -16.0
 margin_top = -50.0
 margin_right = 16.0
 margin_bottom = -36.0
-custom_fonts/font = ExtResource( 21 )
+custom_fonts/font = ExtResource( 22 )
 text = "State"
 align = 1
 valign = 1
-script = ExtResource( 22 )
+script = ExtResource( 23 )
 
 [node name="Attack State" type="Label" parent="."]
 visible = false
@@ -312,11 +328,11 @@ margin_left = -16.0
 margin_top = -60.0
 margin_right = 16.0
 margin_bottom = -46.0
-custom_fonts/font = ExtResource( 21 )
+custom_fonts/font = ExtResource( 22 )
 text = "State"
 align = 1
 valign = 1
-script = ExtResource( 22 )
+script = ExtResource( 23 )
 
 [node name="Animation State" type="Label" parent="."]
 visible = false
@@ -324,11 +340,11 @@ margin_left = -16.0
 margin_top = -70.0
 margin_right = 16.0
 margin_bottom = -56.0
-custom_fonts/font = ExtResource( 21 )
+custom_fonts/font = ExtResource( 22 )
 text = "State"
 align = 1
 valign = 1
-script = ExtResource( 22 )
+script = ExtResource( 23 )
 [connection signal="animation_changed" from="AnimatedSprite" to="Animation State" method="_on_AnimatedSprite_animation_changed"]
 [connection signal="animation_finished" from="AnimatedSprite" to="AnimatedSprite" method="_on_AnimatedSprite_animation_finished"]
 [connection signal="direction_changed" from="Look Direction" to="AnimatedSprite" method="_on_Look_Direction_direction_changed"]
