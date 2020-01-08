@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/not_equals_transition_state_component.gd" type="Script" id=8]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition_state_component.gd" type="Script" id=9]
 [ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=10]
+[ext_resource path="res://Utils/Entity/State Components/Action Buffer/action_buffer_activate_state_component.gd" type="Script" id=11]
+[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/transition_state_component.gd" type="Script" id=12]
 
 [node name="Crouch Move" type="Node"]
 script = ExtResource( 1 )
@@ -25,7 +27,7 @@ dependencies = {
 }
 variables = {
 "crouch": "Crouch",
-"crouched": "crouched",
+"crouch_moved": "crouch_moved",
 "max_speed": 75,
 "stand_up": "Stand Up"
 }
@@ -53,7 +55,6 @@ FUNCTION_NAME = "play"
 args = [ "stand_up" ]
 
 [node name="Transitions" type="Node" parent="."]
-editor/display_folded = true
 script = ExtResource( 6 )
 
 [node name="Stand Up" type="Node" parent="Transitions"]
@@ -93,3 +94,24 @@ NEXT_STATE = "back_roll"
 script = ExtResource( 10 )
 ACTION = "jump"
 NEXT_STATE = "high_jump"
+
+[node name="Pass Through" type="Node" parent="Transitions"]
+script = ExtResource( 11 )
+action_buffer_key = "buffer"
+enter_only = true
+action = "crouch_moved"
+frames = 7
+
+[node name="Pass Through" type="Node" parent="Transitions/Pass Through"]
+script = ExtResource( 12 )
+NEXT_STATE = "pass_through"
+
+[node name="Action Buffer" type="Node" parent="."]
+editor/display_folded = true
+script = ExtResource( 6 )
+
+[node name="Crouch Moved" type="Node" parent="Action Buffer"]
+script = ExtResource( 5 )
+node_key = "buffer"
+FUNCTION_NAME = "add_action"
+args = [ "crouch_moved" ]
