@@ -99,7 +99,7 @@ anims/Crouch = SubResource( 2 )
 position = Vector2( 0, -16 )
 frames = ExtResource( 2 )
 animation = "idle"
-frame = 5
+frame = 4
 playing = true
 script = ExtResource( 3 )
 state_machines = [ NodePath("../Movement"), NodePath("../Attack") ]
@@ -148,6 +148,7 @@ look_direction = NodePath("../Look Direction")
 player_input = NodePath("../Input")
 
 [node name="Movement" type="Node" parent="."]
+editor/display_folded = true
 script = ExtResource( 10 )
 
 [node name="Idle" parent="Movement" instance=ExtResource( 11 )]
@@ -186,12 +187,6 @@ variables = {
 dependencies = {
 "body": NodePath("../.."),
 "buffer": NodePath("../../Action Buffer")
-}
-variables = {
-"crouched": "crouched",
-"mask_bit": 2,
-"mask_enter_value": false,
-"mask_exit_value": true
 }
 
 [node name="Jump" parent="Movement" instance=ExtResource( 15 )]
@@ -232,10 +227,7 @@ dependencies = {
 "look": NodePath("../../Look Direction")
 }
 variables = {
-"crouch": "Crouch",
-"crouched": "crouched",
-"max_speed": 75,
-"stand_up": "Stand Up"
+"max_speed": 75
 }
 
 [node name="Crouch Move" parent="Movement" instance=ExtResource( 17 )]
@@ -247,10 +239,7 @@ dependencies = {
 "look": NodePath("../../Look Direction")
 }
 variables = {
-"crouch": "Crouch",
-"crouch_moved": "crouch_moved",
-"max_speed": 75,
-"stand_up": "Stand Up"
+"max_speed": 75
 }
 
 [node name="Retreat" parent="Movement" instance=ExtResource( 18 )]
@@ -285,13 +274,11 @@ dependencies = {
 variables = {
 "dash_distance": -75,
 "dash_duration": 0.3,
-"dashed": "dashed",
 "enter_gravity": 1200,
 "velocity_y": -250
 }
 
 [node name="Attack" type="Node" parent="."]
-editor/display_folded = true
 script = ExtResource( 10 )
 
 [node name="Idle" parent="Attack" instance=ExtResource( 21 )]

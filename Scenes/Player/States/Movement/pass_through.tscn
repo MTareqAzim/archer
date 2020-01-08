@@ -16,26 +16,21 @@ dependencies = {
 "body": NodePath(""),
 "buffer": NodePath("")
 }
-variables = {
-"crouched": "crouched",
-"mask_bit": 2,
-"mask_enter_value": false,
-"mask_exit_value": true
-}
 
 [node name="Unset Mask Bit" type="Node" parent="."]
 script = ExtResource( 2 )
 node_key = "body"
 FUNCTION_NAME = "set_collision_mask_bit"
-args = [ "mask_bit", "mask_enter_value" ]
+args = [ 2, false ]
 
 [node name="Set Mask Bit" type="Node" parent="."]
 script = ExtResource( 3 )
 node_key = "body"
 FUNCTION_NAME = "set_collision_mask_bit"
-args = [ "mask_bit", "mask_exit_value" ]
+args = [ 2, true ]
 
 [node name="Transitions" type="Node" parent="."]
+editor/display_folded = true
 script = ExtResource( 4 )
 
 [node name="Grounded" type="Node" parent="Transitions"]
@@ -61,3 +56,9 @@ script = ExtResource( 2 )
 node_key = "buffer"
 FUNCTION_NAME = "action_handled"
 args = [ "crouched" ]
+
+[node name="Crouch Moved Handled" type="Node" parent="Action Buffer"]
+script = ExtResource( 2 )
+node_key = "buffer"
+FUNCTION_NAME = "action_handled"
+args = [ "crouch_moved" ]

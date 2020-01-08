@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
-[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=2]
-[ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=3]
-[ext_resource path="res://Utils/Entity/State Components/Look Direction/look_direction_state_component.gd" type="Script" id=4]
+[ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=2]
+[ext_resource path="res://Utils/Entity/State Components/Look Direction/look_direction_state_component.gd" type="Script" id=3]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=4]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Exit/call_function_exit_state_component.gd" type="Script" id=5]
 [ext_resource path="res://Utils/Grouping Node/grouping_node.gd" type="Script" id=6]
 [ext_resource path="res://Utils/State Machine/State/State Components/Transitions/released_transition_state_component.gd" type="Script" id=7]
@@ -25,35 +25,33 @@ dependencies = {
 "look": NodePath("")
 }
 variables = {
-"crouch": "Crouch",
-"crouched": "crouched",
-"max_speed": 75,
-"stand_up": "Stand Up"
+"max_speed": 75
 }
 
-[node name="Crouch" type="Node" parent="."]
-script = ExtResource( 2 )
-node_key = "animation"
-FUNCTION_NAME = "play"
-args = [ "crouch" ]
-
 [node name="Move" type="Node" parent="."]
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 body_key = "body"
 input_handler_key = "input"
 
 [node name="Look" type="Node" parent="."]
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 look_direction_key = "look"
 input_handler_key = "input"
+
+[node name="Crouch" type="Node" parent="."]
+script = ExtResource( 4 )
+node_key = "animation"
+FUNCTION_NAME = "play"
+args = [ "Crouch" ]
 
 [node name="Stand Up" type="Node" parent="."]
 script = ExtResource( 5 )
 node_key = "animation"
 FUNCTION_NAME = "play"
-args = [ "stand_up" ]
+args = [ "Stand Up" ]
 
 [node name="Transitions" type="Node" parent="."]
+editor/display_folded = true
 script = ExtResource( 6 )
 
 [node name="Stand Up" type="Node" parent="Transitions"]
@@ -106,6 +104,7 @@ script = ExtResource( 11 )
 NEXT_STATE = "pass_through"
 
 [node name="Action Buffer" type="Node" parent="."]
+editor/display_folded = true
 script = ExtResource( 6 )
 
 [node name="Crouched" type="Node" parent="Action Buffer"]

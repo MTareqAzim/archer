@@ -48,9 +48,10 @@ not_equals = [ "shoot" ]
 NEXT_STATE = "previous"
 
 [node name="Action Buffer" type="Node" parent="."]
+editor/display_folded = true
 script = ExtResource( 4 )
 
-[node name="Shoot Pressed" type="Node" parent="Action Buffer"]
+[node name="Shoot Pressed Handled" type="Node" parent="Action Buffer"]
 script = ExtResource( 2 )
 node_key = "buffer"
 FUNCTION_NAME = "action_handled"

@@ -59,6 +59,26 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Utils/State Machine/State/State Components/Node State Components/Update/call_function_update_state_component.gd"
 }, {
+"base": "CallFunctionVariableStateComponent",
+"class": "CallFunctionVariableEnterStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_variable_enter_state_component.gd"
+}, {
+"base": "CallFunctionVariableStateComponent",
+"class": "CallFunctionVariableExitStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/Exit/call_function_variable_exit_state_component.gd"
+}, {
+"base": "NodeStateComponent",
+"class": "CallFunctionVariableStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/call_function_variable_state_component.gd"
+}, {
+"base": "CallFunctionVariableStateComponent",
+"class": "CallFunctionVariableUpdateStateComponent",
+"language": "GDScript",
+"path": "res://Utils/State Machine/State/State Components/Node State Components/Update/call_function_variable_update_state_component.gd"
+}, {
 "base": "Reference",
 "class": "Collision2D",
 "language": "GDScript",
@@ -215,6 +235,10 @@ _global_script_class_icons={
 "CallFunctionExitStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Exit/fun_exit.png",
 "CallFunctionStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/fun.png",
 "CallFunctionUpdateStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Update/fun_update.png",
+"CallFunctionVariableEnterStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Enter/funv_enter.png",
+"CallFunctionVariableExitStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Exit/funv_exit.png",
+"CallFunctionVariableStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/funv.png",
+"CallFunctionVariableUpdateStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Update/funv_update.png",
 "Collision2D": "",
 "ComponentState": "res://Utils/State Machine/State/state.png",
 "CompositePolygon2D": "",
