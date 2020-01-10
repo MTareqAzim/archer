@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=2]
 
-[ext_resource path="res://Scenes/Player/player.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Player/player_signals.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Player/player_animations.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://Scenes/Player/player_animation.gd" type="Script" id=3]
 [ext_resource path="res://Utils/Entity/Health/health.gd" type="Script" id=4]
@@ -83,9 +83,8 @@ tracks/1/keys = {
 }
 
 [node name="Player" type="KinematicBody2D"]
-collision_mask = 6
+collision_mask = 14
 script = ExtResource( 1 )
-gravity = 980
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -16 )
@@ -106,6 +105,7 @@ state_machines = [ NodePath("../Movement"), NodePath("../Attack") ]
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource( 4 )
+max_health = 10
 
 [node name="Look Direction" type="Node" parent="."]
 script = ExtResource( 5 )
@@ -279,6 +279,7 @@ variables = {
 }
 
 [node name="Attack" type="Node" parent="."]
+editor/display_folded = true
 script = ExtResource( 10 )
 
 [node name="Idle" parent="Attack" instance=ExtResource( 21 )]
@@ -305,7 +306,6 @@ drag_margin_h_enabled = false
 drag_margin_v_enabled = false
 
 [node name="Movement State" type="Label" parent="."]
-visible = false
 margin_left = -40.0
 margin_top = -50.0
 margin_right = 40.0
@@ -317,7 +317,6 @@ valign = 1
 script = ExtResource( 24 )
 
 [node name="Attack State" type="Label" parent="."]
-visible = false
 margin_left = -40.0
 margin_top = -60.0
 margin_right = 40.0
@@ -329,7 +328,6 @@ valign = 1
 script = ExtResource( 24 )
 
 [node name="Animation State" type="Label" parent="."]
-visible = false
 margin_left = -40.0
 margin_top = -70.0
 margin_right = 40.0
@@ -342,6 +340,7 @@ script = ExtResource( 24 )
 [connection signal="animation_changed" from="AnimatedSprite" to="Animation State" method="_on_AnimatedSprite_animation_changed"]
 [connection signal="animation_finished" from="AnimatedSprite" to="AnimatedSprite" method="_on_AnimatedSprite_animation_finished"]
 [connection signal="direction_changed" from="Look Direction" to="AnimatedSprite" method="_on_Look_Direction_direction_changed"]
+[connection signal="state_changed" from="Movement" to="." method="_on_Movement_state_changed"]
 [connection signal="state_changed" from="Movement" to="AnimatedSprite" method="_on_Movement_state_changed"]
 [connection signal="state_changed" from="Movement" to="Movement State" method="_on_Movement_state_changed"]
 [connection signal="state_changed" from="Attack" to="AnimatedSprite" method="_on_Attack_state_changed"]

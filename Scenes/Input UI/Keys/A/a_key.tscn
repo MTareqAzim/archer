@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Sprites/Keyboard Keys/A/a_key1.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Keyboard Keys/A/a_key2.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Keyboard Keys/A/a_key3.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Keyboard Keys/A/a_key4.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Input UI/Keys/animated_sprite_key.gd" type="Script" id=5]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": false,
+"name": "pressed",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": false,
+"name": "idle",
+"speed": 5.0
+} ]
+
+[node name="A Key" type="Control"]
+margin_right = 16.0
+margin_bottom = 16.0
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "idle"
+playing = true
+centered = false
+script = ExtResource( 5 )
+action = "ui_left"
