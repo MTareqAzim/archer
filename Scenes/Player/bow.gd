@@ -47,7 +47,9 @@ func _shoot(direction: Vector2) -> void:
 func _get_shoot_direction() -> Vector2:
 	var direction := Vector2()
 	var aim : int = _look_direction.get_aim()
-	var look_dir : int = _look_direction.get_look_direction()
+	var look_dir : int = _look_direction.get_aim_direction()
+	
+	_look_direction.set_look_direction(look_dir)
 	
 	if aim == Aim.HIGH:
 		direction = Vector2(look_dir, HIGH).normalized()

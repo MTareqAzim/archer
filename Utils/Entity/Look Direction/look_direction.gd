@@ -27,22 +27,26 @@ func get_look_direction() -> int:
 
 
 func get_aim() -> int:
-	var aim_direction = _get_aim_direction()
+	var aim_vector = _get_aim_vector()
 	
-	set_look_direction(sign(aim_direction.x))
-	
-	var aim_angle = rad2deg(aim_direction.angle())
+	var aim_angle = rad2deg(aim_vector.angle())
 	
 	var aim = _get_aim(aim_angle)
 	return aim
 
 
-func _get_aim_direction() -> Vector2:
+func get_aim_direction() -> int:
+	var aim_vector = _get_aim_vector()
+	
+	return int(sign(aim_vector.x))
+
+
+func _get_aim_vector() -> Vector2:
 	var mouse_position = _bow.get_global_mouse_position()
 	var bow_position = _bow.get_global_position()
-	var aim_direction = (mouse_position - bow_position).normalized()
+	var aim_vector = (mouse_position - bow_position).normalized()
 	
-	return aim_direction
+	return aim_vector
 
 
 func _get_aim(aim_angle: float) -> int:

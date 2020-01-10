@@ -20,7 +20,7 @@ var direction : int = 1
 
 func _physics_process(delta) -> void:
 	var new_aim = parent.get_aim()
-	var new_direction = parent.get_look_direction()
+	var new_direction = parent.get_aim_direction()
 	
 	_set_custom_cursor(new_aim, new_direction)
 
