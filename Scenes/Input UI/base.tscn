@@ -10,12 +10,14 @@
 [node name="Base" type="Control"]
 margin_right = 77.0
 margin_bottom = 35.0
+mouse_filter = 2
 script = ExtResource( 1 )
 
 [node name="Control" type="Control" parent="."]
 margin_right = 77.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 52, 16 )
+mouse_filter = 2
 __meta__ = {
 "_edit_group_": true
 }
@@ -28,20 +30,24 @@ centered = false
 [node name="A Key" parent="Control/Sprite" instance=ExtResource( 3 )]
 margin_left = 2.0
 margin_right = 42.0
+mouse_filter = 2
 
 [node name="S Key" parent="Control/Sprite" instance=ExtResource( 4 )]
 margin_left = 18.0
 margin_right = 58.0
+mouse_filter = 2
 
 [node name="D Key" parent="Control/Sprite" instance=ExtResource( 5 )]
 margin_left = 34.0
 margin_right = 74.0
+mouse_filter = 2
 
 [node name="Crouch" parent="." instance=ExtResource( 6 )]
 margin_left = 14.0
 margin_top = 20.0
 margin_right = 64.0
 margin_bottom = 34.0
+mouse_filter = 2
 text = "Crouch"
 
 [node name="Pass Through" parent="." instance=ExtResource( 6 )]
@@ -49,6 +55,7 @@ visible = false
 margin_top = 20.0
 margin_right = 77.0
 margin_bottom = 34.0
+mouse_filter = 2
 text = "Pass Through"
 
 [node name="Timer" type="Timer" parent="."]

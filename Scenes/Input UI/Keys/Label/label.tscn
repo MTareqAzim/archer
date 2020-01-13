@@ -7,6 +7,7 @@
 [node name="Label" type="VBoxContainer"]
 margin_right = 52.0
 margin_bottom = 14.0
+mouse_filter = 2
 alignment = 1
 script = ExtResource( 1 )
 
