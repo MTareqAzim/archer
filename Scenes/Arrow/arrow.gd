@@ -3,6 +3,8 @@ extends KinematicBody2D
 export (int) var throw_velocity = 200
 export (int) var gravity = 1200
 
+onready var sprite = $Collider/Sprite
+onready var collider = $Collider
 var velocity = Vector2.ZERO
 
 var _distance_traveled : float = 0.0
@@ -13,13 +15,16 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	velocity.y += gravity * delta
 	
-	$Collider.rotation = velocity.angle()
+	collider.rotation = velocity.angle()
 	
 	_distance_traveled += (velocity * delta).length()
 	
 	var collision = move_and_collide(velocity * delta)
 	if collision != null:
-		set_physics_process(false)
+		_on_hit(collision)
+	
+	if _distance_traveled > 2000:
+		queue_free()
 
 
 func get_distance_travelled() -> float:
@@ -28,3 +33,15 @@ func get_distance_travelled() -> float:
 
 func shoot(direction: Vector2) -> void:
 	velocity = throw_velocity * direction
+
+
+func _on_hit(collision: KinematicCollision2D) -> void:
+	var rotation = collider.rotation
+	var transform = sprite.global_transform
+	collider.remove_child(sprite)
+	
+	sprite.global_transform = transform
+	sprite.rotation = rotation
+	get_parent().add_child(sprite)
+	
+	queue_free()

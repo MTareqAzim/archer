@@ -99,7 +99,6 @@ anims/Crouch = SubResource( 2 )
 position = Vector2( 0, -16 )
 frames = ExtResource( 2 )
 animation = "idle"
-frame = 9
 playing = true
 script = ExtResource( 3 )
 state_machines = [ NodePath("../Movement"), NodePath("../Attack") ]

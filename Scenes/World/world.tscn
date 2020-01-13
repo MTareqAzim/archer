@@ -95,6 +95,6 @@ margin_top = -60.0
 margin_right = 0.0
 margin_bottom = 0.0
 [connection signal="attack_state_changed" from="Player" to="CanvasLayer/Mouse UI" method="_on_Player_attack_state_changed"]
+[connection signal="state_changed" from="Player" to="CanvasLayer/Mouse UI" method="_on_Player_state_changed"]
 [connection signal="state_changed" from="Player" to="CanvasLayer/Space Key" method="_on_Player_state_changed"]
 [connection signal="state_changed" from="Player" to="CanvasLayer/Base" method="_on_Player_state_changed"]
-[connection signal="state_changed" from="Player" to="CanvasLayer/Mouse UI" method="_on_Player_state_changed"]
