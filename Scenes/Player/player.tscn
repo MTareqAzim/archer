@@ -99,7 +99,7 @@ anims/Crouch = SubResource( 2 )
 position = Vector2( 0, -16 )
 frames = ExtResource( 2 )
 animation = "idle"
-frame = 5
+frame = 6
 playing = true
 script = ExtResource( 3 )
 state_machines = [ NodePath("../Movement"), NodePath("../Attack") ]
@@ -349,7 +349,7 @@ script = ExtResource( 25 )
 [connection signal="animation_finished" from="AnimatedSprite" to="AnimatedSprite" method="_on_AnimatedSprite_animation_finished"]
 [connection signal="direction_changed" from="Look Direction" to="AnimatedSprite" method="_on_Look_Direction_direction_changed"]
 [connection signal="state_changed" from="Movement" to="." method="_on_Movement_state_changed"]
-[connection signal="state_changed" from="Movement" to="Movement State" method="_on_Movement_state_changed"]
 [connection signal="state_changed" from="Movement" to="AnimatedSprite" method="_on_Movement_state_changed"]
-[connection signal="state_changed" from="Attack" to="Attack State" method="_on_Attack_state_changed"]
+[connection signal="state_changed" from="Movement" to="Movement State" method="_on_Movement_state_changed"]
 [connection signal="state_changed" from="Attack" to="AnimatedSprite" method="_on_Attack_state_changed"]
+[connection signal="state_changed" from="Attack" to="Attack State" method="_on_Attack_state_changed"]
