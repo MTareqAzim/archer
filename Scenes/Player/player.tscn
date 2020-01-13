@@ -315,6 +315,7 @@ drag_margin_h_enabled = false
 drag_margin_v_enabled = false
 
 [node name="Movement State" type="Label" parent="."]
+visible = false
 margin_left = -40.0
 margin_top = -50.0
 margin_right = 40.0
@@ -326,6 +327,7 @@ valign = 1
 script = ExtResource( 25 )
 
 [node name="Attack State" type="Label" parent="."]
+visible = false
 margin_left = -40.0
 margin_top = -60.0
 margin_right = 40.0
@@ -337,6 +339,7 @@ valign = 1
 script = ExtResource( 25 )
 
 [node name="Animation State" type="Label" parent="."]
+visible = false
 margin_left = -40.0
 margin_top = -70.0
 margin_right = 40.0
@@ -352,5 +355,6 @@ script = ExtResource( 25 )
 [connection signal="state_changed" from="Movement" to="." method="_on_Movement_state_changed"]
 [connection signal="state_changed" from="Movement" to="Movement State" method="_on_Movement_state_changed"]
 [connection signal="state_changed" from="Movement" to="AnimatedSprite" method="_on_Movement_state_changed"]
+[connection signal="state_changed" from="Attack" to="." method="_on_Attack_state_changed"]
 [connection signal="state_changed" from="Attack" to="Attack State" method="_on_Attack_state_changed"]
 [connection signal="state_changed" from="Attack" to="AnimatedSprite" method="_on_Attack_state_changed"]

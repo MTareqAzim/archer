@@ -6,7 +6,7 @@ onready var base = $Text/Base
 export (String) var text
 export (bool) var darken setget set_darken
 
-const _darken_color = Color(0.46, 0.36, 0, 1)
+const _darken_color = Color(0.84, 0.74, 0.57, 1)
 
 
 func _ready():
