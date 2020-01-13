@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Sprites/Mouse/mouse1.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Input UI/Mouse/mouse.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/Mouse/left_click.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Mouse/right_click.png" type="Texture" id=4]
+
+[node name="Mouse" type="Control"]
+margin_right = 64.0
+margin_bottom = 64.0
+
+[node name="Mouse" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+script = ExtResource( 2 )
+
+[node name="Left Click" type="Sprite" parent="Mouse"]
+visible = false
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Right Click" type="Sprite" parent="Mouse"]
+visible = false
+texture = ExtResource( 4 )
+centered = false

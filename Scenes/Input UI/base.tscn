@@ -47,7 +47,6 @@ margin_left = 14.0
 margin_top = 20.0
 margin_right = 64.0
 margin_bottom = 34.0
-mouse_filter = 2
 text = "Crouch"
 
 [node name="Pass Through" parent="." instance=ExtResource( 6 )]
@@ -55,7 +54,6 @@ visible = false
 margin_top = 20.0
 margin_right = 77.0
 margin_bottom = 34.0
-mouse_filter = 2
 text = "Pass Through"
 
 [node name="Timer" type="Timer" parent="."]

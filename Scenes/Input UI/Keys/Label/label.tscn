@@ -10,6 +10,7 @@ margin_bottom = 14.0
 mouse_filter = 2
 alignment = 1
 script = ExtResource( 1 )
+text = "Test"
 
 [node name="Text" type="Label" parent="."]
 margin_right = 52.0
@@ -21,7 +22,7 @@ text = "Test"
 align = 1
 valign = 1
 
-[node name="Label" type="NinePatchRect" parent="Text"]
+[node name="Base" type="NinePatchRect" parent="Text"]
 show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0

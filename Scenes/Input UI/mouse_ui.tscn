@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Input UI/mouse_ui.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Input UI/Keys/Label/label.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Input UI/Mouse/mouse.tscn" type="PackedScene" id=3]
+
+[node name="Mouse UI" type="Control"]
+margin_right = 148.0
+margin_bottom = 60.0
+mouse_filter = 2
+script = ExtResource( 1 )
+
+[node name="Shoot" parent="." instance=ExtResource( 2 )]
+margin_left = 6.0
+margin_top = 8.0
+margin_right = 58.0
+margin_bottom = 22.0
+text = "Shoot"
+
+[node name="Retreat" parent="." instance=ExtResource( 2 )]
+margin_left = 73.0
+margin_top = 9.0
+margin_right = 140.0
+margin_bottom = 23.0
+text = "Retreat"
+
+[node name="Back Roll" parent="." instance=ExtResource( 2 )]
+visible = false
+margin_left = 73.0
+margin_top = 9.0
+margin_right = 140.0
+margin_bottom = 23.0
+text = "Back Roll"
+
+[node name="Back Dash" parent="." instance=ExtResource( 2 )]
+visible = false
+margin_left = 73.0
+margin_top = 9.0
+margin_right = 140.0
+margin_bottom = 23.0
+text = "Back Dash"
+
+[node name="Mouse" parent="." instance=ExtResource( 3 )]
+margin_left = 32.0
+margin_right = 96.0
+mouse_filter = 2
+
+[node name="Aim" parent="Mouse" instance=ExtResource( 2 )]
+margin_left = 6.0
+margin_top = 35.0
+margin_right = 58.0
+margin_bottom = 49.0
+text = "Aim"
