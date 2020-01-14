@@ -244,7 +244,7 @@ _global_script_class_icons={
 "CompositePolygon2D": "",
 "EntityStateComponent": "res://Utils/Entity/State Components/entity_state_component.png",
 "EqualsTransitionStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition.png",
-"FunctionActivateComponentStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/fun.png",
+"FunctionActivateComponentStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/if.png",
 "Geometry2D": "",
 "GreaterThanTransitionStateComponent": "res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/greater_than_transition.png",
 "GroupingNode": "res://Utils/Grouping Node/folder.png",
@@ -394,6 +394,14 @@ right_mouse={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Ground"
+2d_physics/layer_3="Platform"
+2d_physics/layer_4="Boss"
+2d_physics/layer_5="Barrier"
 
 [physics]
 

@@ -99,6 +99,7 @@ anims/Crouch = SubResource( 2 )
 position = Vector2( 0, -16 )
 frames = ExtResource( 2 )
 animation = "idle"
+frame = 5
 playing = true
 script = ExtResource( 3 )
 state_machines = [ NodePath("../Movement"), NodePath("../Attack") ]
@@ -151,7 +152,6 @@ look_direction = NodePath("../Look Direction")
 player_input = NodePath("../Input")
 
 [node name="Movement" type="Node" parent="."]
-editor/display_folded = true
 script = ExtResource( 11 )
 
 [node name="Idle" parent="Movement" instance=ExtResource( 12 )]
@@ -282,7 +282,6 @@ variables = {
 }
 
 [node name="Attack" type="Node" parent="."]
-editor/display_folded = true
 script = ExtResource( 11 )
 
 [node name="Idle" parent="Attack" instance=ExtResource( 22 )]

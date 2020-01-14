@@ -1,14 +1,13 @@
 extends NodeStateComponent
-class_name FunctionActivateComponentStateComponent, "fun.png"
+class_name FunctionActivateComponentStateComponent, "if.png"
 
 export (bool) var _activate := true
 
 export (String) var FUNCTION_NAME
 export (bool) var has_args := true
-export (Array, String) var args := []
+export (Array) var args := [] setget set_args
 export (Array) var equals := []
 
-var _args = [] setget set_args
 var _state_components : Dictionary = {}
 
 
@@ -17,13 +16,7 @@ func _ready() -> void:
 
 
 func set_args(new_args: Array) -> void:
-	_args = new_args
-
-
-func assign_variables() -> void:
-	_args.clear()
-	for key in args:
-		_args.append(component_state.get_variable(key))
+	args = new_args
 
 
 func enter() -> void:
@@ -52,7 +45,7 @@ func _check_and_activate() -> void:
 func _call_function() -> bool:
 	var value
 	if has_args:
-		value = node.callv(FUNCTION_NAME, _args)
+		value = node.callv(FUNCTION_NAME, args)
 	else:
 		value = node.call(FUNCTION_NAME)
 
