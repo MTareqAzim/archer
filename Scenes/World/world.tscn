@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Sprites/Background/bg_image_blue.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/Terrain/grassy_stone.tres" type="TileSet" id=2]
 [ext_resource path="res://Sprites/Background/Additional Sky Bottom.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/Player/player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Input UI/base.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/Input UI/Keys/Space/space_key.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Input UI/mouse_ui.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Boss/boss.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Input UI/base.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Input UI/Keys/Space/space_key.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Input UI/mouse_ui.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -68,17 +69,19 @@ tile_data = PoolIntArray( -1, 0, 0, -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -6
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 position = Vector2( 200.324, 192 )
-collision_mask = 30
+
+[node name="Boss" parent="." instance=ExtResource( 5 )]
+position = Vector2( 86, 181 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Base" parent="CanvasLayer" instance=ExtResource( 5 )]
+[node name="Base" parent="CanvasLayer" instance=ExtResource( 6 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -52.0
 margin_bottom = 0.0
 
-[node name="Space Key" parent="CanvasLayer" instance=ExtResource( 6 )]
+[node name="Space Key" parent="CanvasLayer" instance=ExtResource( 7 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 65.1888
@@ -86,7 +89,7 @@ margin_top = -36.2453
 margin_right = 138.189
 margin_bottom = -5.2453
 
-[node name="Mouse UI" parent="CanvasLayer" instance=ExtResource( 7 )]
+[node name="Mouse UI" parent="CanvasLayer" instance=ExtResource( 8 )]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -97,5 +100,5 @@ margin_right = 0.0
 margin_bottom = 0.0
 [connection signal="attack_state_changed" from="Player" to="CanvasLayer/Mouse UI" method="_on_Player_attack_state_changed"]
 [connection signal="state_changed" from="Player" to="CanvasLayer/Base" method="_on_Player_state_changed"]
-[connection signal="state_changed" from="Player" to="CanvasLayer/Space Key" method="_on_Player_state_changed"]
 [connection signal="state_changed" from="Player" to="CanvasLayer/Mouse UI" method="_on_Player_state_changed"]
+[connection signal="state_changed" from="Player" to="CanvasLayer/Space Key" method="_on_Player_state_changed"]

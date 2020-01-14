@@ -1,4 +1,4 @@
-extends "res://Scenes/Player/player.gd"
+extends "res://Utils/Entity/body.gd"
 
 signal state_changed(current_state)
 signal attack_state_changed(current_state)

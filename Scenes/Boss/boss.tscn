@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scenes/Boss/boss.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Hound/idle.png" type="Texture" id=2]
@@ -6,6 +6,13 @@
 [ext_resource path="res://Sprites/Hound/walk2.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Hound/walk3.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/Hound/walk4.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/Boss/boss_input_handler.gd" type="Script" id=7]
+[ext_resource path="res://Utils/Entity/Look Direction/look_direction.gd" type="Script" id=8]
+[ext_resource path="res://Utils/State Machine/state_machine.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/Boss/State Machine/States/idle.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Boss/State Machine/States/patrol.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scratchpad/PixelFont.tres" type="DynamicFont" id=12]
+[ext_resource path="res://Scenes/Player/current_state.gd" type="Script" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20, 11 )
@@ -23,19 +30,75 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="RectangleShape2D" id=3]
+
 [node name="Boss" type="KinematicBody2D"]
 scale = Vector2( 2, 2 )
 collision_layer = 8
-collision_mask = 6
+collision_mask = 22
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -11 )
 shape = SubResource( 1 )
-one_way_collision = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 12, -23 )
 frames = SubResource( 2 )
 animation = "idle"
 playing = true
+
+[node name="Edge Detectors" type="Area2D" parent="."]
+scale = Vector2( 0.5, 0.5 )
+collision_layer = 0
+collision_mask = 16
+
+[node name="Left" type="CollisionShape2D" parent="Edge Detectors"]
+position = Vector2( -61, -30 )
+shape = SubResource( 3 )
+
+[node name="Right" type="CollisionShape2D" parent="Edge Detectors"]
+position = Vector2( 62, -30 )
+shape = SubResource( 3 )
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource( 7 )
+look_direction = NodePath("../LookDirection")
+edge_detectors = NodePath("../Edge Detectors")
+
+[node name="Edge Detectors Timer" type="Timer" parent="Input"]
+wait_time = 0.2
+one_shot = true
+
+[node name="LookDirection" type="Node" parent="."]
+script = ExtResource( 8 )
+
+[node name="Movement" type="Node" parent="."]
+script = ExtResource( 9 )
+_active = true
+
+[node name="Idle" parent="Movement" instance=ExtResource( 10 )]
+
+[node name="Patrol" parent="Movement" instance=ExtResource( 11 )]
+dependencies = {
+"body": NodePath("../.."),
+"input": NodePath("../../Input"),
+"look": NodePath("../../LookDirection")
+}
+variables = {
+"max_speed": 70
+}
+
+[node name="Movement State" type="Label" parent="."]
+margin_left = -42.0
+margin_top = -49.0
+margin_right = 42.0
+margin_bottom = -35.0
+custom_fonts/font = ExtResource( 12 )
+text = "Test"
+align = 1
+valign = 1
+script = ExtResource( 13 )
+[connection signal="timeout" from="Input/Edge Detectors Timer" to="Input" method="_on_Edge_Detectors_Timer_timeout"]
+[connection signal="state_changed" from="Movement" to="Movement State" method="_on_Movement_state_changed"]
+[connection signal="state_changed" from="Movement" to="Input" method="_on_Movement_state_changed"]
