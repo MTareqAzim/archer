@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
 [ext_resource path="res://Utils/Entity/State Components/Look Direction/look_direction_state_component.gd" type="Script" id=2]
 [ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=3]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=4]
 
 [node name="Patrol" type="Node"]
 script = ExtResource( 1 )
@@ -10,7 +11,8 @@ state_name = "patrol"
 dependencies = {
 "body": NodePath(""),
 "input": NodePath(""),
-"look": NodePath("")
+"look": NodePath(""),
+"sprite": NodePath("")
 }
 variables = {
 "max_speed": 0
@@ -25,3 +27,9 @@ input_handler_key = "input"
 script = ExtResource( 3 )
 body_key = "body"
 input_handler_key = "input"
+
+[node name="Walking Animation" type="Node" parent="."]
+script = ExtResource( 4 )
+node_key = "sprite"
+FUNCTION_NAME = "play"
+args = [ "walk" ]

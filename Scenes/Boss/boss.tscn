@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scenes/Boss/boss.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Hound/idle.png" type="Texture" id=2]
@@ -6,13 +6,14 @@
 [ext_resource path="res://Sprites/Hound/walk2.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Hound/walk3.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/Hound/walk4.png" type="Texture" id=6]
-[ext_resource path="res://Scenes/Boss/boss_input_handler.gd" type="Script" id=7]
-[ext_resource path="res://Utils/Entity/Look Direction/look_direction.gd" type="Script" id=8]
-[ext_resource path="res://Utils/State Machine/state_machine.gd" type="Script" id=9]
-[ext_resource path="res://Scenes/Boss/State Machine/States/idle.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Scenes/Boss/State Machine/States/patrol.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scratchpad/PixelFont.tres" type="DynamicFont" id=12]
-[ext_resource path="res://Scenes/Player/current_state.gd" type="Script" id=13]
+[ext_resource path="res://Scenes/Boss/animated_sprite.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/Boss/boss_input_handler.gd" type="Script" id=8]
+[ext_resource path="res://Utils/Entity/Look Direction/look_direction.gd" type="Script" id=9]
+[ext_resource path="res://Utils/State Machine/state_machine.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/Boss/State Machine/States/idle.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Boss/State Machine/States/patrol.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scratchpad/PixelFont.tres" type="DynamicFont" id=13]
+[ext_resource path="res://Scenes/Player/current_state.gd" type="Script" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20, 11 )
@@ -47,8 +48,10 @@ position = Vector2( 12, -23 )
 frames = SubResource( 2 )
 animation = "idle"
 playing = true
+script = ExtResource( 7 )
 
 [node name="Edge Detectors" type="Area2D" parent="."]
+editor/display_folded = true
 scale = Vector2( 0.5, 0.5 )
 collision_layer = 0
 collision_mask = 16
@@ -62,7 +65,7 @@ position = Vector2( 62, -30 )
 shape = SubResource( 3 )
 
 [node name="Input" type="Node" parent="."]
-script = ExtResource( 7 )
+script = ExtResource( 8 )
 look_direction = NodePath("../LookDirection")
 edge_detectors = NodePath("../Edge Detectors")
 
@@ -71,19 +74,20 @@ wait_time = 0.2
 one_shot = true
 
 [node name="LookDirection" type="Node" parent="."]
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 
 [node name="Movement" type="Node" parent="."]
-script = ExtResource( 9 )
+script = ExtResource( 10 )
 _active = true
 
-[node name="Idle" parent="Movement" instance=ExtResource( 10 )]
+[node name="Idle" parent="Movement" instance=ExtResource( 11 )]
 
-[node name="Patrol" parent="Movement" instance=ExtResource( 11 )]
+[node name="Patrol" parent="Movement" instance=ExtResource( 12 )]
 dependencies = {
 "body": NodePath("../.."),
 "input": NodePath("../../Input"),
-"look": NodePath("../../LookDirection")
+"look": NodePath("../../LookDirection"),
+"sprite": NodePath("../../AnimatedSprite")
 }
 variables = {
 "max_speed": 70
@@ -94,11 +98,12 @@ margin_left = -42.0
 margin_top = -49.0
 margin_right = 42.0
 margin_bottom = -35.0
-custom_fonts/font = ExtResource( 12 )
+custom_fonts/font = ExtResource( 13 )
 text = "Test"
 align = 1
 valign = 1
-script = ExtResource( 13 )
+script = ExtResource( 14 )
 [connection signal="timeout" from="Input/Edge Detectors Timer" to="Input" method="_on_Edge_Detectors_Timer_timeout"]
+[connection signal="direction_changed" from="LookDirection" to="AnimatedSprite" method="_on_LookDirection_direction_changed"]
 [connection signal="state_changed" from="Movement" to="Movement State" method="_on_Movement_state_changed"]
 [connection signal="state_changed" from="Movement" to="Input" method="_on_Movement_state_changed"]
