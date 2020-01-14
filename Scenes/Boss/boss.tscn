@@ -105,5 +105,5 @@ valign = 1
 script = ExtResource( 14 )
 [connection signal="timeout" from="Input/Edge Detectors Timer" to="Input" method="_on_Edge_Detectors_Timer_timeout"]
 [connection signal="direction_changed" from="LookDirection" to="AnimatedSprite" method="_on_LookDirection_direction_changed"]
-[connection signal="state_changed" from="Movement" to="Movement State" method="_on_Movement_state_changed"]
 [connection signal="state_changed" from="Movement" to="Input" method="_on_Movement_state_changed"]
+[connection signal="state_changed" from="Movement" to="Movement State" method="_on_Movement_state_changed"]
