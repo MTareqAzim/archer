@@ -3,8 +3,8 @@
 [ext_resource path="res://Sprites/Background/bg_image_blue.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/Terrain/grassy_stone.tres" type="TileSet" id=2]
 [ext_resource path="res://Sprites/Background/Additional Sky Bottom.png" type="Texture" id=3]
-[ext_resource path="res://Scenes/Player/player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Boss/boss.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Boss/boss.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Player/player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Input UI/base.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Input UI/Keys/Space/space_key.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Input UI/mouse_ui.tscn" type="PackedScene" id=8]
@@ -67,11 +67,11 @@ collision_mask = 0
 format = 1
 tile_data = PoolIntArray( -1, 0, 0, -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0, -65526, 0, 0, -65525, 0, 0, -65524, 0, 0, -65523, 0, 0, -65522, 0, 0, -65521, 0, 0, -65520, 0, 0, -65519, 0, 0, -65518, 0, 0, -65517, 0, 0, -65516, 0, 0, -65515, 0, 0, -65514, 0, 0, 65535, 0, 0, 22, 0, 0, 131071, 0, 0, 65558, 0, 0, 196607, 0, 0, 131094, 0, 0, 262143, 0, 0, 196630, 0, 0, 327679, 0, 0, 262166, 0, 0, 393215, 0, 0, 327702, 0, 0, 458751, 0, 0, 393238, 0, 0, 524287, 0, 0, 458774, 0, 0, 589823, 0, 0, 524310, 0, 0 )
 
-[node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( 200.324, 192 )
-
-[node name="Boss" parent="." instance=ExtResource( 5 )]
+[node name="Boss" parent="." instance=ExtResource( 4 )]
 position = Vector2( 86, 181 )
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 368.474, 177.75 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -99,6 +99,6 @@ margin_top = -60.0
 margin_right = 0.0
 margin_bottom = 0.0
 [connection signal="attack_state_changed" from="Player" to="CanvasLayer/Mouse UI" method="_on_Player_attack_state_changed"]
-[connection signal="state_changed" from="Player" to="CanvasLayer/Mouse UI" method="_on_Player_state_changed"]
-[connection signal="state_changed" from="Player" to="CanvasLayer/Space Key" method="_on_Player_state_changed"]
 [connection signal="state_changed" from="Player" to="CanvasLayer/Base" method="_on_Player_state_changed"]
+[connection signal="state_changed" from="Player" to="CanvasLayer/Space Key" method="_on_Player_state_changed"]
+[connection signal="state_changed" from="Player" to="CanvasLayer/Mouse UI" method="_on_Player_state_changed"]

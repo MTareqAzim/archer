@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scenes/Boss/boss.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Hound/idle.png" type="Texture" id=2]
@@ -6,14 +6,18 @@
 [ext_resource path="res://Sprites/Hound/walk2.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Hound/walk3.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/Hound/walk4.png" type="Texture" id=6]
-[ext_resource path="res://Scenes/Boss/animated_sprite.gd" type="Script" id=7]
-[ext_resource path="res://Scenes/Boss/boss_input_handler.gd" type="Script" id=8]
-[ext_resource path="res://Utils/Entity/Look Direction/look_direction.gd" type="Script" id=9]
-[ext_resource path="res://Utils/State Machine/state_machine.gd" type="Script" id=10]
-[ext_resource path="res://Scenes/Boss/State Machine/States/idle.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/Boss/State Machine/States/patrol.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Scratchpad/PixelFont.tres" type="DynamicFont" id=13]
-[ext_resource path="res://Scenes/Player/current_state.gd" type="Script" id=14]
+[ext_resource path="res://Sprites/Hound/poised1.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Hound/poised2.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Hound/poised3.png" type="Texture" id=9]
+[ext_resource path="res://Scenes/Boss/animated_sprite.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/Boss/boss_input_handler.gd" type="Script" id=11]
+[ext_resource path="res://Utils/Entity/Look Direction/look_direction.gd" type="Script" id=12]
+[ext_resource path="res://Utils/State Machine/state_machine.gd" type="Script" id=13]
+[ext_resource path="res://Scenes/Boss/State Machine/States/idle.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/Boss/State Machine/States/patrol.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/Boss/State Machine/States/growl.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scratchpad/PixelFont.tres" type="DynamicFont" id=17]
+[ext_resource path="res://Scenes/Player/current_state.gd" type="Script" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20, 11 )
@@ -29,9 +33,17 @@ animations = [ {
 "loop": true,
 "name": "walk",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "growl",
+"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=3]
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 55.3263
 
 [node name="Boss" type="KinematicBody2D"]
 scale = Vector2( 2, 2 )
@@ -48,7 +60,7 @@ position = Vector2( 12, -23 )
 frames = SubResource( 2 )
 animation = "idle"
 playing = true
-script = ExtResource( 7 )
+script = ExtResource( 10 )
 
 [node name="Edge Detectors" type="Area2D" parent="."]
 editor/display_folded = true
@@ -64,29 +76,52 @@ shape = SubResource( 3 )
 position = Vector2( 62, -30 )
 shape = SubResource( 3 )
 
+[node name="Player Detector" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player Detector"]
+position = Vector2( 0, -11 )
+shape = SubResource( 4 )
+
 [node name="Input" type="Node" parent="."]
-script = ExtResource( 8 )
+script = ExtResource( 11 )
 look_direction = NodePath("../LookDirection")
 edge_detectors = NodePath("../Edge Detectors")
+player_detector = NodePath("../Player Detector")
+state_machine = NodePath("../Movement")
 
 [node name="Edge Detectors Timer" type="Timer" parent="Input"]
 wait_time = 0.2
 one_shot = true
 
+[node name="Player Detector Timer" type="Timer" parent="Input"]
+wait_time = 3.0
+one_shot = true
+
 [node name="LookDirection" type="Node" parent="."]
-script = ExtResource( 9 )
+script = ExtResource( 12 )
 
 [node name="Movement" type="Node" parent="."]
-script = ExtResource( 10 )
+script = ExtResource( 13 )
 _active = true
 
-[node name="Idle" parent="Movement" instance=ExtResource( 11 )]
+[node name="Idle" parent="Movement" instance=ExtResource( 14 )]
 
-[node name="Patrol" parent="Movement" instance=ExtResource( 12 )]
+[node name="Patrol" parent="Movement" instance=ExtResource( 15 )]
 dependencies = {
 "body": NodePath("../.."),
 "input": NodePath("../../Input"),
 "look": NodePath("../../LookDirection"),
+"sprite": NodePath("../../AnimatedSprite")
+}
+variables = {
+"max_speed": 70
+}
+
+[node name="Growl" parent="Movement" instance=ExtResource( 16 )]
+dependencies = {
+"body": NodePath("../.."),
+"input": NodePath("../../Input"),
 "sprite": NodePath("../../AnimatedSprite")
 }
 variables = {
@@ -98,12 +133,15 @@ margin_left = -42.0
 margin_top = -49.0
 margin_right = 42.0
 margin_bottom = -35.0
-custom_fonts/font = ExtResource( 13 )
+custom_fonts/font = ExtResource( 17 )
 text = "Test"
 align = 1
 valign = 1
-script = ExtResource( 14 )
+script = ExtResource( 18 )
+[connection signal="body_entered" from="Player Detector" to="Input" method="_on_Player_Detector_body_entered"]
+[connection signal="body_exited" from="Player Detector" to="Input" method="_on_Player_Detector_body_exited"]
 [connection signal="timeout" from="Input/Edge Detectors Timer" to="Input" method="_on_Edge_Detectors_Timer_timeout"]
+[connection signal="timeout" from="Input/Player Detector Timer" to="Input" method="_on_Player_Detector_Timer_timeout"]
 [connection signal="direction_changed" from="LookDirection" to="AnimatedSprite" method="_on_LookDirection_direction_changed"]
 [connection signal="state_changed" from="Movement" to="Input" method="_on_Movement_state_changed"]
 [connection signal="state_changed" from="Movement" to="Movement State" method="_on_Movement_state_changed"]

@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
 [ext_resource path="res://Utils/Entity/State Components/Look Direction/look_direction_state_component.gd" type="Script" id=2]
 [ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=3]
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=4]
+[ext_resource path="res://Utils/Grouping Node/grouping_node.gd" type="Script" id=5]
+[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=6]
 
 [node name="Patrol" type="Node"]
 script = ExtResource( 1 )
 state_name = "patrol"
+push_down = true
+overwrite = true
 dependencies = {
 "body": NodePath(""),
 "input": NodePath(""),
@@ -33,3 +37,11 @@ script = ExtResource( 4 )
 node_key = "sprite"
 FUNCTION_NAME = "play"
 args = [ "walk" ]
+
+[node name="Transitions" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="PressedTransitionStateComponent" type="Node" parent="Transitions"]
+script = ExtResource( 6 )
+ACTION = "growl"
+NEXT_STATE = "growl"

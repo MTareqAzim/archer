@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
+[ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=2]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Enter/call_function_enter_state_component.gd" type="Script" id=3]
+[ext_resource path="res://Utils/State Machine/State/State Components/Transitions/released_transition_state_component.gd" type="Script" id=4]
+
+[node name="Growl" type="Node"]
+script = ExtResource( 1 )
+state_name = "growl"
+push_down = true
+overwrite = true
+dependencies = {
+"body": NodePath(""),
+"input": NodePath(""),
+"sprite": NodePath("")
+}
+variables = {
+"max_speed": 70
+}
+
+[node name="Move" type="Node" parent="."]
+script = ExtResource( 2 )
+body_key = "body"
+input_handler_key = "input"
+
+[node name="Growl" type="Node" parent="."]
+script = ExtResource( 3 )
+node_key = "sprite"
+FUNCTION_NAME = "play"
+args = [ "growl" ]
+
+[node name="Growl Released" type="Node" parent="."]
+script = ExtResource( 4 )
+ACTION = "growl"
+NEXT_STATE = "previous"
