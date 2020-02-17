@@ -22,7 +22,8 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	current_state.handle_input(event)
+	pass
+	#current_state.handle_input(event)
 
 
 func _physics_process(delta: float) -> void:

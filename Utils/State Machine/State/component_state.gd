@@ -73,14 +73,20 @@ func _append_dependencies() -> void:
 
 
 func _assign_dependencies() -> void:
-	_call_component_function("assign_dependencies")
+	_call_component_function_force("assign_dependencies")
 
 
 func _assign_variables() -> void:
-	_call_component_function("assign_variables")
+	_call_component_function_force("assign_variables")
 
 
 func _call_component_function(function: String, args: Array = []) -> void:
 	for component in _components:
 		if component.active and component.has_method(function):
+			component.callv(function, args)
+
+
+func _call_component_function_force(function: String, args: Array = []) -> void:
+	for component in _components:
+		if component.has_method(function):
 			component.callv(function, args)

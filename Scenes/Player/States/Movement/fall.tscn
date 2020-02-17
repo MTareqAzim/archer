@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Utils/State Machine/State/component_state.gd" type="Script" id=1]
 [ext_resource path="res://Utils/Entity/State Components/Movement/move_state_component.gd" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Update/Transitions/equals_transition_state_component.gd" type="Script" id=6]
 [ext_resource path="res://Utils/Entity/State Components/Action Buffer/action_buffer_deactivate_state_component.gd" type="Script" id=7]
 [ext_resource path="res://Utils/State Machine/State/State Components/Transitions/pressed_transition_state_component.gd" type="Script" id=8]
+[ext_resource path="res://Utils/Entity/State Components/Action Buffer/action_buffer_activate_state_component.gd" type="Script" id=9]
+[ext_resource path="res://Utils/State Machine/State/State Components/Node State Components/Exit/call_function_exit_state_component.gd" type="Script" id=10]
 
 [node name="Fall" type="Node"]
 script = ExtResource( 1 )
@@ -51,14 +53,42 @@ FUNCTION_NAME = "get_velocity_y"
 equals = [ 0 ]
 NEXT_STATE = "previous"
 
-[node name="ActionBufferDeactivateStateComponent" type="Node" parent="Transitions"]
+[node name="Dashed" type="Node" parent="Transitions"]
 script = ExtResource( 7 )
 action_buffer_key = "buffer"
 enter_only = true
 action = "dashed"
 frames = 5
 
-[node name="Back Dash" type="Node" parent="Transitions/ActionBufferDeactivateStateComponent"]
+[node name="Back Dash" type="Node" parent="Transitions/Dashed"]
 script = ExtResource( 8 )
 ACTION = "retreat"
 NEXT_STATE = "back_dash"
+
+[node name="Double Jumped" type="Node" parent="Transitions"]
+script = ExtResource( 7 )
+action_buffer_key = "buffer"
+enter_only = true
+action = "double_jumped"
+frames = 5
+
+[node name="Double Jump" type="Node" parent="Transitions/Double Jumped"]
+script = ExtResource( 8 )
+ACTION = "jump"
+NEXT_STATE = "double_jump"
+
+[node name="Action Buffer" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="Dashed" type="Node" parent="Action Buffer"]
+script = ExtResource( 9 )
+action_buffer_key = "buffer"
+enter_only = true
+action = "dashed"
+frames = 5
+
+[node name="Dashed" type="Node" parent="Action Buffer/Dashed"]
+script = ExtResource( 10 )
+node_key = "buffer"
+FUNCTION_NAME = "add_action"
+args = [ "dashed" ]
